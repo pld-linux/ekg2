@@ -3,12 +3,13 @@
 %bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
 					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_without	aspell			# Don't build in spell-checking support with aspell
+%bcond_without	xosd  			# Don't build xosd plugin
 %bcond_with	ioctl_daemon		# With (suid-root) ioctl daemon
 
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20041108
+%define		_snap 20041110
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -37,7 +38,7 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
-BuildRequires:	xosd-devel
+%{?with_xosd:BuildRequires:	xosd-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -56,7 +57,7 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 %prep
 %setup -q -n %{name}-%{_snap}
 
-%{__perl} -pi -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
+sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
 %build
 %{__libtoolize} --ltdl
@@ -71,7 +72,9 @@ cd ..
 %{__autoheader}
 %{__automake}
 %configure \
-	--with%{!?with_aspell:out}-aspell
+	--with%{!?with_aspell:out}-aspell \
+	--with%{!?with_xosd:out}-xosd
+	
 %{__make}
 
 %install
