@@ -13,7 +13,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20050319
+%define		_snap 20050505
 %endif
 
 Summary:	Multi-protocol instant messaging and chat client
@@ -26,6 +26,7 @@ License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
 # Source0-md5:	0eb64dc1cdf8e306ae488cf734244db2
+Patch0:		%{name}-pl-po.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -163,6 +164,7 @@ Wtyczka xosd dla ekg2.
 
 %prep
 %setup -q -n %{name}-%{_snap}
+%patch0 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
 %build
