@@ -8,7 +8,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20041105
+%define		_snap 20041108
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -21,7 +21,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-Patch0:		%{name}-nolibs.patch
+# Source0-md5:	e40382711d5f5b894c75b55e6b54845d
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -37,6 +37,7 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
+BuildRequires:	xosd-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,7 +55,6 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 
 %prep
 %setup -q -n %{name}-%{_snap}
-#%patch0 -p1
 
 %{__perl} -pi -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
