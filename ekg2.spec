@@ -225,42 +225,50 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/plugins/ncurses
 
 %files plugin-protocol-gg
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gg.so
 %{_datadir}/%{name}/plugins/gg
 
 %if %{with libgsm}
 %files plugin-protocol-gsm
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gsm.so
 %endif
 
 %files plugin-protocol-irc
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/irc.so
 %{_datadir}/%{name}/plugins/irc
 
 %if %{with jabber}
 %files plugin-protocol-jabber
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/jabber.so
 %{_datadir}/%{name}/plugins/jabber
 %endif
 
 %if %{with python}
 %files plugin-scripting-python
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
 # %{_datadir}/%{name}/plugins/jabber
 %endif
 
 %files plugin-ioctld
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ioctld.so
 %{_datadir}/%{name}/plugins/ioctld
 %attr(4755,root,root) %{_libdir}/ioctld
 
 %if %{with sqlite}
 %files plugin-logsqlite
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logsqlite.so
 %{_datadir}/%{name}/plugins/logsqlite
 %endif
 
 %files plugin-sim
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/sim.so
 %{_datadir}/%{name}/plugins/sim
 
