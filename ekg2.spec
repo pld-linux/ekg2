@@ -13,7 +13,7 @@ URL:		http://dev.null.pl/ekg/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	ncurses-devel
-BuildRequires:	openssl-devel >= 0.9.7c
+BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	readline-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
