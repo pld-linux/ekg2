@@ -1,10 +1,12 @@
 %bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
 					# (must use ./builder -n5 or plain rpmbuild)
+%bcond_with	aspell			# Build in spell-checking support with aspell
+					# (currently leaks memory)
 
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20040623
+%define		_snap 20040706
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -17,7 +19,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	70302d5f2df94100595603ea325e9368
+# Source0-md5:	94136ee525ad5a5becce4e40f639f9d0
 URL:		http://www.ekg2.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -27,6 +29,13 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
+%if %{with aspell}
+BuildRequires:	aspell-devel
+%endif
+BuildRequires:	gpm-devel
+BuildRequires:	gnutls-devel
+BuildRequires:	expat-devel
+BuildRequires:	libjpeg-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -51,7 +60,9 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	%{!?_with_aspell:--without-aspell} %{?_with_aspell:--with-aspell}
+echo '#define HAVE_GNUTLS 1' >> ekg2-config.h # KLUDGE, wait for autoconf update
 %{__make}
 
 %install
