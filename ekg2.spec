@@ -14,6 +14,7 @@ URL:		http://dev.null.pl/ekg/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libgadu-devel
+BuildRequires:	libltdl-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
