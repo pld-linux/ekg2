@@ -29,7 +29,7 @@ Esperimentale cliente di Gadu-Gadu.
 
 %description -l pl
 Eksperymentalny Klient Gadu-Gadu. W wersji 2.0 obs³uguje zarówno
-Gadu-Gadu jak iJabbera. Planowana tak¿e obs³uga ICQ.
+Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 
 %package -n libgadu
 Summary:	libgadu library
