@@ -9,7 +9,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20041224
+%define		_snap 20041229
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -22,7 +22,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	77cb43d5cc407fc5361b56f8d88a6466
+# Source0-md5:	2d0309616a1bf969dfa91fd2797a6aa2
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -54,6 +54,18 @@ Esperimentale cliente di Gadu-Gadu.
 %description -l pl
 Eksperymentalny Klient Gadu-Gadu. W wersji drugiej obs³uguje zarówno
 Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
+
+%package plugin-xosd
+Summary:	xosd plugin for ekg2
+Summary(pl):	Wtyczka xosd dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{version}-%{release}
+
+%description plugin-xosd
+xosd plugin for ekg2
+
+%description plugin-xosd -l pl
+Wtyczka xosd dla ekg2
 
 %prep
 %setup -q -n %{name}-%{_snap}
@@ -100,6 +112,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
-%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/[!x]*.so
 %{?with_ioctl_daemon:%attr(4755,root,root) %{_libdir}/ioctld}
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/[!p]*
+%dir %{_datadir}/%{name}/plugins
+%{_datadir}/%{name}/plugins/[!x]*
+
+%if %{with xosd}
+%files plugin-xosd
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/xosd.so
+%{_datadir}/%{name}/plugins/xosd
+%endif
