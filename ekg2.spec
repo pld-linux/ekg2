@@ -4,7 +4,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20040427
+%define		_snap 20040623
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -16,9 +16,9 @@ Version:	2.0
 Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	http://dev.null.pl/ekg2/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	ee1e7993975ae70878bf4a51e2bc2bee
-URL:		http://dev.null.pl/ekg2/
+Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
+# Source0-md5:	70302d5f2df94100595603ea325e9368
+URL:		http://www.ekg2.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libgadu-devel
@@ -66,7 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog* NEWS* README-main docs/*
+%doc NEWS* README-main docs/*
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/ekg2
 %dir %{_libdir}/ekg2/plugins
