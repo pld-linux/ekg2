@@ -3,7 +3,6 @@
 %bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
 					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_without	aspell			# Don't build in spell-checking support with aspell
-%bcond_without	xosd  			# Don't build xosd plugin
 %bcond_with	ioctl_daemon		# With (suid-root) ioctl daemon
 
 %if %{with yesterday_snapshot}
@@ -39,7 +38,7 @@ BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	sed >= 4.0
-%{?with_xosd:BuildRequires:	xosd-devel}
+BuildRequires:	xosd-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -84,8 +83,7 @@ cd ..
 %{__autoheader}
 %{__automake}
 %configure \
-	--with%{!?with_aspell:out}-aspell \
-	--with%{!?with_xosd:out}-xosd
+	--with%{!?with_aspell:out}-aspell
 	
 %{__make}
 
@@ -119,9 +117,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/[!x]*
 
-%if %{with xosd}
 %files plugin-xosd
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/xosd.so
 %{_datadir}/%{name}/plugins/xosd
-%endif
