@@ -13,7 +13,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20050505
+%define		_snap 20050405
 %endif
 
 Summary:	Multi-protocol instant messaging and chat client
@@ -25,7 +25,7 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	0eb64dc1cdf8e306ae488cf734244db2
+# Source0-md5:	e89e8e40cb6c563efb918e808001cf50
 Patch0:		%{name}-pl-po.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
