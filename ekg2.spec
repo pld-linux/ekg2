@@ -22,8 +22,10 @@ License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
 # Source0-md5:	9da7ba07b95652da03149800509a0c27
+Patch0:		%{name}-nolibs.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
+BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
@@ -32,11 +34,10 @@ BuildRequires:	gpm-devel
 BuildRequires:	libgadu-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	libjpeg-devel
-# shouldn't be needed (regenerate ac?)
-BuildRequires:	libstdc++-devel
+BuildRequires:	libltdl-devel
+BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
-BuildRequires:	libltdl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,10 +55,22 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 
 %prep
 %setup -q -n %{name}-%{_snap}
+%patch0 -p1
+
+%{__perl} -pi -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
 %build
-cp -f /usr/share/automake/config.sub .
-cp -f /usr/share/automake/config.sub libltdl/
+%{__libtoolize} --ltdl
+cd libltdl
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+cd ..
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--with%{!?with_aspell:out}-aspell
 %{__make}
