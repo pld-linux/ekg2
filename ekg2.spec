@@ -2,14 +2,15 @@
 # Conditional build:
 %bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
 					# (must use ./builder -n5 or plain rpmbuild)
-%bcond_with	aspell			# Build in spell-checking support with aspell
-					# (currently leaks memory)
-%bcond_with	ioctl_daemon		# with (suid-root) ioctl daemon
+%bcond_without	aspell			# Don't build in spell-checking support with aspell
+%bcond_with	ioctl_daemon		# With (suid-root) ioctl daemon
+%bcond_with	gnutls			# Compile in gnutls support (SSL encryption for Jabber
+					# module; kludgy)
 #
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20040706
+%define		_snap 20040720
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -22,7 +23,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	94136ee525ad5a5becce4e40f639f9d0
+# Source0-md5:	a0efd77c06a36da85d3bce0a59d7033d
 URL:		http://www.ekg2.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -32,13 +33,11 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
-%if %{with aspell}
-BuildRequires:	aspell-devel
-%endif
 BuildRequires:	gpm-devel
-BuildRequires:	gnutls-devel
 BuildRequires:	expat-devel
 BuildRequires:	libjpeg-devel
+%{?with_aspell:BuildRequires:	aspell-devel}
+%{?with_gnutls:BuildRequires:	gnutls-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,8 +64,16 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 %{__automake}
 %configure \
 	--with%{!?with_aspell:out}-aspell
-echo '#define HAVE_GNUTLS 1' >> ekg2-config.h # KLUDGE, wait for autoconf update
+%if %{with gnutls}
+echo '#define HAVE_GNUTLS 1' > plugins/jabber/jabber.h. # KLUDGE, wait for autoconf update
+cat plugins/jabber/jabber.h >> plugins/jabber/jabber.h.
+mv plugins/jabber/jabber.h{,\~}
+mv plugins/jabber/jabber.h{.,}
+sed 's/^jabber_la_LIBADD =/& -lgnutls/' < plugins/jabber/Makefile > plugins/jabber/Makefile.
+mv plugins/jabber/Makefile{,\~}
+mv plugins/jabber/Makefile{.,}
 %{__make}
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
