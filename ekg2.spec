@@ -30,6 +30,7 @@ BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	gpm-devel
 BuildRequires:	expat-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	gcc-c++
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	gnutls-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
