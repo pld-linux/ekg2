@@ -8,7 +8,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20040804
+%define		_snap 20040817
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -21,13 +21,9 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	88d88568d560eb9e3e9d4836b1fc5d60
+# Source0-md5:	0dc34153b9121a790ef99927e6e61922
 URL:		http://www.ekg2.org/
-BuildRequires:	autoconf
-BuildRequires:	automake
 BuildRequires:	libgadu-devel
-BuildRequires:	libtool
-BuildRequires:	libltdl-devel
 BuildRequires:	libgsm-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
@@ -48,26 +44,23 @@ Einen client kompatibel zu Gadu-Gadu und Jabber.
 Esperimentale cliente di Gadu-Gadu.
 
 %description -l pl
-Eksperymentalny Klient Gadu-Gadu. W wersji 2.0 obs³uguje zarówno
+Eksperymentalny Klient Gadu-Gadu. W wersji drugiej obs³uguje zarówno
 Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 
 %prep
 %setup -q -n %{name}-%{_snap}
 
 %build
-%{__libtoolize} --ltdl
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
 %configure \
 	--with%{!?with_aspell:out}-aspell
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+%{!?with_ioctl_daemon:rm $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/ioctld.*}
 
 rm -rf docs/{CVS,.cvsignore,Makefile*}
 mv -f README README-main
@@ -79,7 +72,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS* README-main docs/*
 %attr(755,root,root) %{_bindir}/*
-%dir %{_libdir}/ekg2
-%dir %{_libdir}/ekg2/plugins
-%attr(755,root,root) %{_libdir}/ekg2/plugins/*.so
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/plugins
+%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
 %{?with_ioctl_daemon:%attr(4755,root,root) %{_libdir}/ioctld}
+%{_datadir}/%{name}
