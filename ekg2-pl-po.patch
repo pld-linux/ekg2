@@ -1,0 +1,132 @@
+diff -ur ekg2-20050319/po/pl.po ekg2-20050319.new/po/pl.po
+--- ekg2-20050319/po/pl.po	2005-03-13 15:18:30.000000000 +0000
++++ ekg2-20050319.new/po/pl.po	2005-04-06 14:32:07.893021520 +0000
+@@ -443,11 +443,11 @@
+ 
+ #: ekg/themes.c:1092
+ msgid "%> %1 %Y(available)%n %b%3:%4%n\n"
+-msgstr "%> %1 %Y(dostêpn%@2)%n %b%3:%4%n\n"
++msgstr "%> %1 %Y(dostêpny%@2)%n %b%3:%4%n\n"
+ 
+ #: ekg/themes.c:1093
+ msgid "%> %1 %Y(available: %n%5%Y)%n %b%3:%4%n\n"
+-msgstr "%> %1 %Y(dostêpn%@2: %n%5%Y)%n %b%3:%4%n\n"
++msgstr "%> %1 %Y(dostêpny%@2: %n%5%Y)%n %b%3:%4%n\n"
+ 
+ #: ekg/themes.c:1094
+ msgid "%> %1 %G(away)%n %b%3:%4%n\n"
+@@ -491,11 +491,11 @@
+ 
+ #: ekg/themes.c:1104
+ msgid "%> %1 %r(offline)%n\n"
+-msgstr "%> %1 %r(niedostêpn%@2)%n\n"
++msgstr "%> %1 %r(niedostêpny%@2)%n\n"
+ 
+ #: ekg/themes.c:1105
+ msgid "%> %1 %r(offline: %n%5%r)%n\n"
+-msgstr "%> %1 %r(niedostêpn%@2: %n%5%r)%n\n"
++msgstr "%> %1 %r(niedostêpny%@2: %n%5%r)%n\n"
+ 
+ #: ekg/themes.c:1106
+ msgid "%> %1 %c(invisible)%n %b%3:%4%n\n"
+@@ -598,11 +598,11 @@
+ 
+ #: ekg/themes.c:1237
+ msgid "%> (%3) %1 is %Yavailable%n\n"
+-msgstr "%> (%3) %1 jest %Ydostêpn%@2%n\n"
++msgstr "%> (%3) %1 jest %Ydostêpny%@2%n\n"
+ 
+ #: ekg/themes.c:1238
+ msgid "%> (%3) %1 is %Yavailable%n: %T%4%n\n"
+-msgstr "%> (%3) %1 jest %Ydostêpn%@2%n: %T%4%n\n"
++msgstr "%> (%3) %1 jest %Ydostêpny%@2%n: %T%4%n\n"
+ 
+ #: ekg/themes.c:1239
+ msgid "%> (%3) %1 is %Gaway%n\n"
+@@ -614,11 +614,11 @@
+ 
+ #: ekg/themes.c:1241
+ msgid "%> (%3) %1 is %roffline%n\n"
+-msgstr "%> (%3) %1 jest %rniedostêpn%@2%n\n"
++msgstr "%> (%3) %1 jest %rniedostêpny%@2%n\n"
+ 
+ #: ekg/themes.c:1242
+ msgid "%> (%3) %1 is %roffline%n: %T%4%n\n"
+-msgstr "%> (%3) %1 jest %rniedostêpn%@2%n: %T%4%n\n"
++msgstr "%> (%3) %1 jest %rniedostêpny%@2%n: %T%4%n\n"
+ 
+ #: ekg/themes.c:1243
+ msgid "%> (%3) %1 is %cinvisible%n\n"
+@@ -932,7 +932,7 @@
+ 
+ #: ekg/themes.c:1342
+ msgid "%Y(available)%N"
+-msgstr "%Y(dostêpn%@1)%n"
++msgstr "%Y(dostêpny%@1)%n"
+ 
+ #: ekg/themes.c:1343
+ #, fuzzy, c-format
+@@ -941,7 +941,7 @@
+ 
+ #: ekg/themes.c:1344
+ msgid "%r(offline)%n"
+-msgstr "%r(niedostêpn%@1)%n"
++msgstr "%r(niedostêpny%@1)%n"
+ 
+ #: ekg/themes.c:1345
+ #, fuzzy, c-format
+@@ -1040,11 +1040,11 @@
+ 
+ #: ekg/themes.c:1380 ekg/themes.c:1415 ekg/themes.c:1651
+ msgid "%Yavailable%n"
+-msgstr "%Ydostêpn%@1%n"
++msgstr "%Ydostêpny%@1%n"
+ 
+ #: ekg/themes.c:1381 ekg/themes.c:1652
+ msgid "%Yavailable%n %K(%n%2%K)%n"
+-msgstr "%Ydostêpn%@1%n %K(%n%2%K)%n"
++msgstr "%Ydostêpny%@1%n %K(%n%2%K)%n"
+ 
+ #: ekg/themes.c:1382 ekg/themes.c:1417 ekg/themes.c:1653
+ #, fuzzy, c-format
+@@ -1057,11 +1057,11 @@
+ 
+ #: ekg/themes.c:1384 ekg/themes.c:1427 ekg/themes.c:1655
+ msgid "%roffline%n"
+-msgstr "%rniedostêpn%@1%n"
++msgstr "%rniedostêpny%@1%n"
+ 
+ #: ekg/themes.c:1385 ekg/themes.c:1656
+ msgid "%roffline%n %K(%n%2%K)%n"
+-msgstr "%rniedostêpn%@1%n %K(%n%2%K)%n"
++msgstr "%rniedostêpny%@1%n %K(%n%2%K)%n"
+ 
+ #: ekg/themes.c:1386 ekg/themes.c:1419 ekg/themes.c:1657
+ #, fuzzy, c-format
+@@ -1395,7 +1395,7 @@
+ 
+ #: ekg/themes.c:1488
+ msgid "%! %1 has to available to connect\n"
+-msgstr "%! %1 musi byæ dostêpn%@1, by móc nawi±zaæ po³±czenie\n"
++msgstr "%! %1 musi byæ dostêpny%@1, by móc nawi±zaæ po³±czenie\n"
+ 
+ #: ekg/themes.c:1491
+ msgid "%) (%2) Query with %T%1%n started\n"
+@@ -2207,7 +2207,7 @@
+ 
+ #: plugins/xosd/xosd.c:352
+ msgid "%1 is online,"
+-msgstr "%1 jest dostêpn%@1,"
++msgstr "%1 jest dostêpny%@1,"
+ 
+ #: plugins/xosd/xosd.c:353
+ msgid "%1 is away,"
+@@ -2223,7 +2223,7 @@
+ 
+ #: plugins/xosd/xosd.c:356
+ msgid "%1 is offline,"
+-msgstr "%1 jest niedostêpn%@1,"
++msgstr "%1 jest niedostêpny%@1,"
+ 
+ #: plugins/xosd/xosd.c:357
+ msgid "%1 is invisible,"
