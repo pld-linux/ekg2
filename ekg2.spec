@@ -18,7 +18,7 @@ Summary(it):	Esperimentale cliente di Gadu-Gadu
 Summary(pl):	Eksperymentalny Klient Gadu-Gadu
 Name:		ekg2
 Version:	2.0
-Release:	0.%{_snap}.1
+Release:	0.%{_snap}.2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
@@ -40,6 +40,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	sed >= 4.0
 %{?with_xosd:BuildRequires:	xosd-devel}
+Patch0:         %{name}-shadow_colour.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -57,7 +58,7 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 
 %prep
 %setup -q -n %{name}-%{_snap}
-
+%{?with_yesterday_snapshot:%{?with_xosd:%patch0 -p0}}
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
 %build
