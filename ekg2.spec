@@ -32,7 +32,7 @@ BuildRequires:	expat-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	gcc-c++
 BuildRequires:  autoconf
-BuildRequires:  libstdc++
+BuildRequires:  libstdc++-devel
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	gnutls-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
