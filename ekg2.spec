@@ -4,13 +4,11 @@
 					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_without	aspell			# Don't build in spell-checking support with aspell
 %bcond_with	ioctl_daemon		# With (suid-root) ioctl daemon
-%bcond_with	gnutls			# Compile in gnutls support (SSL encryption for Jabber
-					# module; kludgy)
-#
+
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20040720
+%define		_snap 20040804
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -23,7 +21,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	a0efd77c06a36da85d3bce0a59d7033d
+# Source0-md5:	88d88568d560eb9e3e9d4836b1fc5d60
 URL:		http://www.ekg2.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -37,7 +35,7 @@ BuildRequires:	gpm-devel
 BuildRequires:	expat-devel
 BuildRequires:	libjpeg-devel
 %{?with_aspell:BuildRequires:	aspell-devel}
-%{?with_gnutls:BuildRequires:	gnutls-devel}
+BuildRequires:	gnutls-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -64,16 +62,6 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 %{__automake}
 %configure \
 	--with%{!?with_aspell:out}-aspell
-%if %{with gnutls}
-echo '#define HAVE_GNUTLS 1' > plugins/jabber/jabber.h. # KLUDGE, wait for autoconf update
-cat plugins/jabber/jabber.h >> plugins/jabber/jabber.h.
-mv plugins/jabber/jabber.h{,\~}
-mv plugins/jabber/jabber.h{.,}
-sed 's/^jabber_la_LIBADD =/& -lgnutls/' < plugins/jabber/Makefile > plugins/jabber/Makefile.
-mv plugins/jabber/Makefile{,\~}
-mv plugins/jabber/Makefile{.,}
-%{__make}
-%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
