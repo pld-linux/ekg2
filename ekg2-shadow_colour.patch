@@ -1,0 +1,62 @@
+diff -urN plugins/xosd/osd.h plugins/xosd.new/osd.h
+--- plugins/xosd/osd.h	2004-12-24 12:02:05.545131496 +0100
++++ plugins/xosd.new/osd.h	2004-12-24 12:26:01.202878344 +0100
+@@ -1,6 +1,7 @@
+ /* variables */
+ char *xosd_font;
+ char *xosd_colour;
++char *xosd_shadow_colour;
+ 
+ int xosd_shadow_offset;
+ int xosd_vertical_position;
+diff -urN plugins/xosd/vars.txt plugins/xosd.new/vars.txt
+--- plugins/xosd/vars.txt	2004-12-23 18:00:23.000000000 +0100
++++ plugins/xosd.new/vars.txt	2004-12-24 12:31:17.084856984 +0100
+@@ -21,6 +21,12 @@
+ 	wielko¶æ wektora (podana w pikselach), o który ma byæ przesuniêty 
+ 	cieñ komunikatu wzglêdem samego napisu. warto¶æ 0 wy³±cza cieñ.
+ 
++shadow_colour
++	typ: tekst
++	domy¶lna warto¶æ: "#000000"
++
++	kolor cienia 
++
+ vertical_position
+ 	typ: liczba
+ 	domy¶lna warto¶æ: 2
+diff -urN plugins/xosd/xosd.c plugins/xosd.new/xosd.c
+--- plugins/xosd/xosd.c	2004-12-24 11:27:46.843101776 +0100
++++ plugins/xosd.new/xosd.c	2004-12-24 12:26:01.203878192 +0100
+@@ -42,6 +42,8 @@
+ 	xosd_set_font(osd, xosd_font); 
+ 	
+ 	xosd_set_shadow_offset(osd, xosd_shadow_offset);
++
++	xosd_set_shadow_colour(osd, xosd_shadow_colour);
+ 	
+ 	xosd_set_colour(osd, xosd_colour);
+ 
+@@ -200,11 +202,14 @@
+ {
+ 	xfree(xosd_font);
+ 	xfree(xosd_colour);
++	xfree(xosd_shadow_colour);
+ 
+ 	xosd_font = xstrdup("-adobe-helvetica-bold-r-normal-*-*-120-*-*-p-*-iso8859-2");
+ 	xosd_colour = xstrdup("#00dd00");
+ 	
+ 	xosd_shadow_offset = 2;
++	xosd_shadow_colour = xstrdup("#000000");
++	
+ 	xosd_vertical_position = 2;
+ 	xosd_vertical_offset = 48;
+ 	xosd_horizontal_position = 0;
+@@ -234,6 +239,7 @@
+ 	variable_add(&xosd_plugin, "font", VAR_STR, 1, &xosd_font, NULL, NULL, NULL);
+ 	variable_add(&xosd_plugin, "colour", VAR_STR, 1, &xosd_colour, NULL, NULL, NULL);
+ 	variable_add(&xosd_plugin, "shadow_offset", VAR_INT, 1, &xosd_shadow_offset, NULL, NULL, NULL);
++	variable_add(&xosd_plugin, "shadow_colour", VAR_STR, 1, &xosd_shadow_colour, NULL, NULL, NULL);
+ 	variable_add(&xosd_plugin, "vertical_position", VAR_INT, 1, &xosd_vertical_position, NULL, NULL, NULL);
+ 	variable_add(&xosd_plugin, "vertical_offset", VAR_INT, 1, &xosd_vertical_offset, NULL, NULL, NULL);
+ 	variable_add(&xosd_plugin, "horizontal_position", VAR_INT, 1, &xosd_horizontal_position, NULL, NULL, NULL);
