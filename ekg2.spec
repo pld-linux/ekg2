@@ -56,8 +56,8 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 %setup -q -n %{name}-%{_snap}
 
 %build
-cp -f %{_datadir}/automake/config.sub .
-cp -f %{_datadir}/automake/config.sub libltdl/
+cp -f /usr/share/automake/config.sub .
+cp -f /usr/share/automake/config.sub libltdl/
 %configure \
 	--with%{!?with_aspell:out}-aspell
 %{__make}
