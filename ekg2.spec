@@ -66,7 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS* README-main docs/*
+%doc ChangeLog* NEWS* README-main docs/*
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/ekg2
 %dir %{_libdir}/ekg2/plugins
