@@ -9,7 +9,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20041205
+%define		_snap 20041224
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -18,11 +18,11 @@ Summary(it):	Esperimentale cliente di Gadu-Gadu
 Summary(pl):	Eksperymentalny Klient Gadu-Gadu
 Name:		ekg2
 Version:	2.0
-Release:	0.%{_snap}.2
+Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	57ce2cfe2518ab2138ac586355a1546d
+# Source0-md5:	77cb43d5cc407fc5361b56f8d88a6466
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -40,7 +40,6 @@ BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	sed >= 4.0
 %{?with_xosd:BuildRequires:	xosd-devel}
-Patch0:         %{name}-shadow_colour.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -58,7 +57,6 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 
 %prep
 %setup -q -n %{name}-%{_snap}
-%{?with_yesterday_snapshot:%{?with_xosd:%patch0 -p0}}
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
 %build
