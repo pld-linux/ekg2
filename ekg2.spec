@@ -1,8 +1,11 @@
+#
+# Conditional build:
 %bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
 					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_with	aspell			# Build in spell-checking support with aspell
 					# (currently leaks memory)
-
+%bcond_with	ioctl_daemon		# with (suid-root) ioctl daemon
+#
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
@@ -61,16 +64,18 @@ Gadu-Gadu jak i Jabbera. Planowana tak¿e obs³uga ICQ.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{!?_with_aspell:--without-aspell} %{?_with_aspell:--with-aspell}
+	--with%{!?with_aspell:out}-aspell
 echo '#define HAVE_GNUTLS 1' >> ekg2-config.h # KLUDGE, wait for autoconf update
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
 rm -rf docs/{CVS,.cvsignore,Makefile*}
-mv README README-main
+mv -f README README-main
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -82,4 +87,4 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/ekg2
 %dir %{_libdir}/ekg2/plugins
 %attr(755,root,root) %{_libdir}/ekg2/plugins/*.so
-%{?_with_ioctl_daemon:%attr(4755,root,root) %{_libdir}/ioctld}
+%{?with_ioctl_daemon:%attr(4755,root,root) %{_libdir}/ioctld}
