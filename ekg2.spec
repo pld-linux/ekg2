@@ -57,7 +57,7 @@ Wieloprotoko³owy, otwarty komunikator internetowy z wieloma pluginami.
 Summary:	Gadu-gadu protocol plugin for ekg2
 Summary(pl):	Wtyczka protoko³u Gadu-gadu dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-protocol-gg
 Gadu-gadu protocol plugin for ekg2.
@@ -69,7 +69,7 @@ Wtyczka protoko³u gadu-gadu dla ekg2.
 Summary:	GSM VoIP protocol plugin for ekg2
 Summary(pl):	Wtyczka protoko³u GSM VoIP dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-protocol-gsm
 GSM VoIP protocol plugin for ekg2.
@@ -81,7 +81,7 @@ Wtyczka protoko³u GSM VoIP dla ekg2.
 Summary:	IRC protocol plugin for ekg2
 Summary(pl):	Wtyczka protoko³u IRC dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-protocol-irc
 IRC protocol plugin for ekg2.
@@ -93,7 +93,7 @@ Wtyczka protoko³u IRC dla ekg2.
 Summary:	Jabber protocol plugin for ekg2
 Summary(pl):	Wtyczka protoko³u Jabber dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-protocol-jabber
 Jabber protocol plugin for ekg2.
@@ -105,7 +105,7 @@ Wtyczka protoko³u Jabber dla ekg2.
 Summary:	Python scripting plugin for ekg2
 Summary(pl):	Wtyczka jêzyka Python dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-scripting-python
 Python scripting plugin for ekg2.
@@ -117,7 +117,7 @@ Wtyczka skryptów Pythona dla ekg2.
 Summary:	Ioctld plugin for ekg2
 Summary(pl):	Wtyczka ioctld dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-ioctld
 Ioctld plugin for ekg2 (contains suid root binary!).
@@ -129,7 +129,7 @@ Plugin ioctld dla ekg2 (zawiera program z ustawionym suid root!).
 Summary:	SQLite log plugin for ekg2
 Summary(pl):	Wtyczka logowania do SQLite dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-logsqlite
 SQLite log plugin for ekg2.
@@ -141,7 +141,7 @@ Wtyczka logowania do bazy SQLite dla ekg2.
 Summary:	Encryption plugin for ekg2
 Summary(pl):	Wtyczka szyfruj±ca dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-sim
 Message encryption plugin for ekg2.
@@ -153,7 +153,7 @@ Wtyczka szyfruj±ca wiadomo¶ci dla ekg2.
 Summary:	xosd plugin for ekg2
 Summary(pl):	Wtyczka xosd dla ekg2
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-xosd
 xosd plugin for ekg2.
