@@ -9,7 +9,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20041110
+%define		_snap 20041205
 %endif
 
 Summary:	A client compatible with Gadu-Gadu
@@ -22,7 +22,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	172ba865b4f77265b68a4bf62d74812e
+# Source0-md5:	57ce2cfe2518ab2138ac586355a1546d
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
