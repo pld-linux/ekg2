@@ -31,6 +31,8 @@ BuildRequires:	gpm-devel
 BuildRequires:	expat-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	gcc-c++
+BuildRequires:  autoconf
+BuildRequires:  libstdc++
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	gnutls-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
