@@ -61,10 +61,10 @@ Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
 
 %description plugin-xosd
-xosd plugin for ekg2
+xosd plugin for ekg2.
 
 %description plugin-xosd -l pl
-Wtyczka xosd dla ekg2
+Wtyczka xosd dla ekg2.
 
 %prep
 %setup -q -n %{name}-%{_snap}
