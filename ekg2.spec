@@ -22,7 +22,7 @@ Release:	0.%{_snap}.1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	e40382711d5f5b894c75b55e6b54845d
+# Source0-md5:	172ba865b4f77265b68a4bf62d74812e
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
