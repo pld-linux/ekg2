@@ -23,20 +23,19 @@ Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
 # Source0-md5:	d12e86bff3876f8be4969c008cae4058
 URL:		http://www.ekg2.org/
+%{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	automake
+BuildRequires:	expat-devel
+BuildRequires:	gettext-devel
+BuildRequires:	gnutls-devel >= 1.0.0
+BuildRequires:	gpm-devel
 BuildRequires:	libgadu-devel
 BuildRequires:	libgsm-devel
+BuildRequires:	libjpeg-devel
+# shouldn't be needed (regenerate ac?)
+BuildRequires:	libstdc++-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
-BuildRequires:	gpm-devel
-BuildRequires:	expat-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	gcc-c++
-BuildRequires:	autoconf
-BuildRequires:	gettext-devel
-BuildRequires:	libstdc++-devel
-%{?with_aspell:BuildRequires:	aspell-devel}
-BuildRequires:	gnutls-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -72,10 +71,14 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf docs/{CVS,.cvsignore,Makefile*}
 mv -f README README-main
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/*.la
+
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc NEWS* README-main docs/*
 %attr(755,root,root) %{_bindir}/*
@@ -84,4 +87,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
 %{?with_ioctl_daemon:%attr(4755,root,root) %{_libdir}/ioctld}
 %{_datadir}/%{name}
-%{_datadir}/locale/*/LC_MESSAGES/%{name}.mo
