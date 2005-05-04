@@ -27,6 +27,7 @@ Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
 # Source0-md5:	e89e8e40cb6c563efb918e808001cf50
 Patch0:		%{name}-pl-po.patch
+Patch1:		%{name}-gcc4.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -165,6 +166,7 @@ Wtyczka xosd dla ekg2.
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
+%patch1 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 
 %build
@@ -260,7 +262,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ioctld.so
 %{_datadir}/%{name}/plugins/ioctld
-%attr(4755,root,root) %{_libdir}/ioctld
+%attr(4755,root,root) %{_libexecdir}/ioctld
 
 %if %{with sqlite}
 %files plugin-logsqlite
