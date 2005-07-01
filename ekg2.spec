@@ -165,6 +165,7 @@ Wtyczka xosd dla ekg2.
 %prep
 %setup -q -n %{name}-%{_snap}
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
+sed -i -e 's/\/opt\/sqlite\/lib/\/opt\/sqlite\/lib \/usr\/lib64/' m4/sqlite.m4
 
 %build
 %{__libtoolize} --ltdl
