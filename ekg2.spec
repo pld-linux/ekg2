@@ -20,7 +20,7 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl):	Wieloprotoko³owy komunikator internetowy
 Name:		ekg2
 Version:	1.0
-Release:	0.%{_snap}.1
+Release:	0.%{_snap}.2
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
@@ -32,7 +32,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 %{?with_jabber:BuildRequires:	expat-devel}
 BuildRequires:	gettext-devel
-%{?with_jabber:BuildRequires:	gnutls-devel >= 1.0.0}
+%{?with_jabber:BuildRequires:	gnutls-devel >= 1.2.5}
 BuildRequires:	gpm-devel
 %{?with_gadugadu:BuildRequires:	libgadu-devel}
 %{?with_libgsm:BuildRequires:	libgsm-devel}
