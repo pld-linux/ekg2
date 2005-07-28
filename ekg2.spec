@@ -5,6 +5,7 @@
 %bcond_without	aspell			# build without spell-checking support with aspell
 %bcond_without	gadugadu		# don't build gg plugin
 %bcond_without	jabber			# don't build jabber plugin
+%bcond_without	gnutls			# build jabber plugin without libgnutls
 %bcond_without	libgsm			# don't build libgsm plugin
 %bcond_without	python			# don't build Python plugin
 %bcond_without	sqlite			# don't build logsqlite plugin
@@ -13,7 +14,11 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20050621
+%define		_snap 20050627
+%endif
+
+%if %{without jabber}
+%undefine with_gnutls
 %endif
 
 Summary:	Multi-protocol instant messaging and chat client
@@ -25,14 +30,14 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	71373f6347786f8f934a8cfa478a4426
+# Source0-md5:	0249eb30568bc38ecf44448451d7fd19
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 %{?with_jabber:BuildRequires:	expat-devel}
 BuildRequires:	gettext-devel
-%{?with_jabber:BuildRequires:	gnutls-devel >= 1.2.5}
+%{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 BuildRequires:	gpm-devel
 %{?with_gadugadu:BuildRequires:	libgadu-devel}
 %{?with_libgsm:BuildRequires:	libgsm-devel}
@@ -182,6 +187,7 @@ cd ..
 %configure \
 	--with%{!?with_aspell:out}-aspell \
 	--with%{!?with_jabber:out}-expat \
+	--with%{!?with_gnutls:out}-libgnutls \
 	--with%{!?with_gadugadu:out}-libgadu \
 	--with%{!?with_libgsm:out}-libgsm \
 	--with%{!?with_python:out}-python \
