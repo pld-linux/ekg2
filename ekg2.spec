@@ -14,7 +14,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20050627
+%define		_snap 20050808
 %endif
 
 %if %{without jabber}
@@ -25,12 +25,12 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl):	Wieloprotoko³owy komunikator internetowy
 Name:		ekg2
 Version:	1.0
-Release:	0.%{_snap}.2
+Release:	0.%{_snap}.1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	0249eb30568bc38ecf44448451d7fd19
+# Source0-md5:	3c23c66e92846ea6ac90fd524059b014
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
