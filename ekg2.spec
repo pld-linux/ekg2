@@ -8,13 +8,14 @@
 %bcond_without	gnutls			# build jabber plugin without libgnutls
 %bcond_without	libgsm			# don't build libgsm plugin
 %bcond_without	python			# don't build Python plugin
+%bcond_without	perl			# don't build Perl plugin
 %bcond_without	sqlite			# don't build logsqlite plugin
 %bcond_without	xosd			# don't build xosd plugin
 
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20050808
+%define		_snap 20050930
 %endif
 
 %if %{without jabber}
@@ -30,7 +31,8 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	3c23c66e92846ea6ac90fd524059b014
+# Source0-md5:	caef3ce86b0d707faa1115e583a5a9fd
+Patch0:		%{name}-perl-install.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -48,6 +50,9 @@ BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 %{?with_python:BuildRequires:	python-devel}
 %{?with_python:BuildRequires:   python}
+%{?with_perl:BuildRequires:	perl-devel}
+%{?with_perl:BuildRequires:	rpm-perlprov}
+
 BuildRequires:	sed >= 4.0
 %{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_xosd:BuildRequires:	xosd-devel}
@@ -119,6 +124,18 @@ Python scripting plugin for ekg2.
 %description plugin-scripting-python -l pl
 Wtyczka skryptów Pythona dla ekg2.
 
+%package plugin-scripting-perl
+Summary:	Perl scripting plugin for ekg2
+Summary(pl):	Wtyczka jêzyka Perl dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-scripting-perl
+Python scripting Perl for ekg2.
+
+%description plugin-scripting-perl -l pl
+Wtyczka skryptów Perla dla ekg2.
+
 %package plugin-ioctld
 Summary:	Ioctld plugin for ekg2
 Summary(pl):	Wtyczka ioctld dla ekg2
@@ -169,6 +186,7 @@ Wtyczka xosd dla ekg2.
 
 %prep
 %setup -q -n %{name}-%{_snap}
+%patch0 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e 's/\/opt\/sqlite\/lib/\/opt\/sqlite\/lib \/usr\/lib64/' m4/sqlite.m4
 
@@ -231,6 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/plugins/sms
 %{_datadir}/%{name}/plugins/logs
 %{_datadir}/%{name}/plugins/ncurses
+%dir %{_datadir}/%{name}/scripts
 
 %files plugin-protocol-gg
 %defattr(644,root,root,755)
@@ -260,6 +279,23 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
 # %{_datadir}/%{name}/plugins/jabber
+%endif
+
+%if %{with perl}
+%files plugin-scripting-perl
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/perl.so
+%{perl_archlib}/Ekg2.pm
+%dir %{perl_archlib}/Ekg2
+%{perl_archlib}/Ekg2/Irc.pm
+%dir %{perl_archlib}/auto/Ekg2
+%{perl_archlib}/auto/Ekg2/Ekg2.bs
+%attr(755,root,root) %{perl_archlib}/auto/Ekg2/Ekg2.so
+%dir %{perl_archlib}/auto/Ekg2/Irc
+%{perl_archlib}/auto/Ekg2/Irc/Irc.bs
+%attr(755,root,root) %{perl_archlib}/auto/Ekg2/Irc/Irc.so
+%{_datadir}/%{name}/scripts/dns.pl
+%{_datadir}/%{name}/scripts/xmms.pl
 %endif
 
 %files plugin-ioctld
