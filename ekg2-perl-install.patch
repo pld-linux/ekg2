@@ -1,0 +1,18 @@
+diff -ur ekg2-20050930.ble/plugins/perl/common/Makefile.PL ekg2-20050930/plugins/perl/common/Makefile.PL
+--- ekg2-20050930.ble/plugins/perl/common/Makefile.PL	2005-09-29 12:50:19.000000000 +0000
++++ ekg2-20050930/plugins/perl/common/Makefile.PL	2005-09-30 23:47:13.000000000 +0000
+@@ -4,4 +4,5 @@
+               'LIBS' => '',
+ 	      'OBJECT' => '$(O_FILES)',
+               'INC' => '-I../../.. ',
++	      'INSTALLDIRS' => 'perl',
+ 	      'VERSION_FROM' => './Ekg2.pm');
+diff -ur ekg2-20050930.ble/plugins/perl/irc/Makefile.PL ekg2-20050930/plugins/perl/irc/Makefile.PL
+--- ekg2-20050930.ble/plugins/perl/irc/Makefile.PL	2005-09-29 12:50:21.000000000 +0000
++++ ekg2-20050930/plugins/perl/irc/Makefile.PL	2005-09-30 23:46:53.000000000 +0000
+@@ -5,4 +5,5 @@
+ 	      'OBJECT' => '$(O_FILES)',
+               'TYPEMAPS' => ['../common/typemap'],
+               'INC' => '-I../../.. -I../../irc ',
++	      'INSTALLDIRS' => 'perl',
+ 	      'VERSION_FROM' => './Irc.pm');
