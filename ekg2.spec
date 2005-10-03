@@ -15,7 +15,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20050930
+%define		_snap 20051003
 %endif
 
 %if %{without jabber}
@@ -31,7 +31,7 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	caef3ce86b0d707faa1115e583a5a9fd
+# Source0-md5:	f449ae580950ed4e9b906ec7513c5ee2
 Patch0:		%{name}-perl-install.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
@@ -285,15 +285,15 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-scripting-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/perl.so
-%{perl_archlib}/Ekg2.pm
-%dir %{perl_archlib}/Ekg2
-%{perl_archlib}/Ekg2/Irc.pm
-%dir %{perl_archlib}/auto/Ekg2
-%{perl_archlib}/auto/Ekg2/Ekg2.bs
-%attr(755,root,root) %{perl_archlib}/auto/Ekg2/Ekg2.so
-%dir %{perl_archlib}/auto/Ekg2/Irc
-%{perl_archlib}/auto/Ekg2/Irc/Irc.bs
-%attr(755,root,root) %{perl_archlib}/auto/Ekg2/Irc/Irc.so
+%{perl_vendorarch}/Ekg2.pm
+%dir %{perl_vendorarch}/Ekg2
+%{perl_vendorarch}/Ekg2/Irc.pm
+%dir %{perl_vendorarch}/auto/Ekg2
+%{perl_vendorarch}/auto/Ekg2/Ekg2.bs
+%attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Ekg2.so
+%dir %{perl_vendorarch}/auto/Ekg2/Irc
+%{perl_vendorarch}/auto/Ekg2/Irc/Irc.bs
+%attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Irc/Irc.so
 %{_datadir}/%{name}/scripts/dns.pl
 %{_datadir}/%{name}/scripts/xmms.pl
 %endif
