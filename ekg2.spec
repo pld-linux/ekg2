@@ -15,7 +15,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20051003
+%define		_snap 20051128
 %endif
 
 %if %{without jabber}
@@ -31,7 +31,7 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	f449ae580950ed4e9b906ec7513c5ee2
+# Source0-md5:	183f067f4a9ea77d8ee0d1e3188c4c1a
 Patch0:		%{name}-perl-install.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
