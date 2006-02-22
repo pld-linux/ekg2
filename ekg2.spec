@@ -9,17 +9,23 @@
 %bcond_without	libgsm			# don't build libgsm plugin
 %bcond_without	python			# don't build Python plugin
 %bcond_without	perl			# don't build Perl plugin
-%bcond_without	sqlite			# don't build logsqlite plugin
+%bcond_without	sqlite			# don't build logsqlite plugin based on sqlite (conflicts with sqlite3)
+%bcond_with	sqlite3			# build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
+%bcond_without  gtk			# don't build gtk plugin
 
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20060127
+%define		_snap 20060221
 %endif
 
 %if %{without jabber}
 %undefine with_gnutls
+%endif
+
+%if %{with sqlite3}
+%undefine sqlite
 %endif
 
 Summary:	Multi-protocol instant messaging and chat client
@@ -31,7 +37,7 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	8fb1d7f175fe4750f4157f802421c9fd
+# Source0-md5:	e7785cef55c3fce2203bfbacc5c961b0
 Patch0:		%{name}-perl-install.patch
 URL:		http://www.ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
@@ -54,8 +60,10 @@ BuildRequires:	openssl-devel >= 0.9.7d
 %{?with_perl:BuildRequires:	rpm-perlprov}
 
 BuildRequires:	sed >= 4.0
-%{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_xosd:BuildRequires:	xosd-devel}
+%{?with_sqlite:BuildRequires:	sqlite-devel}
+%{?with_sqlite3:BuildRequires:	sqlite3-devel}
+%{?with_gtk:BuildRequires:	gtk+2-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -153,6 +161,11 @@ Summary:	SQLite log plugin for ekg2
 Summary(pl):	Wtyczka logowania do SQLite dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+%if %{with sqlite3}
+Requires:	sqlite3
+%else
+Requires:	sqlite
+%endif
 
 %description plugin-logsqlite
 SQLite log plugin for ekg2.
@@ -184,6 +197,19 @@ xosd plugin for ekg2.
 %description plugin-xosd -l pl
 Wtyczka xosd dla ekg2.
 
+%package plugin-gtk
+Summary:	gtk plugin for ekg2
+Summary(pl):	Wtyczka gtk dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	gtk+2
+
+%description plugin-gtk
+gtk plugin for ekg2.
+
+%description plugin-gtk -l pl
+Wtyczka gtk dla ekg2.
+
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
@@ -209,8 +235,10 @@ cd ..
 	--with%{!?with_gadugadu:out}-libgadu \
 	--with%{!?with_libgsm:out}-libgsm \
 	--with%{!?with_python:out}-python \
+	--with%{!?with_xosd:out}-xosd \
 	--with%{!?with_sqlite:out}-sqlite \
-	--with%{!?with_xosd:out}-xosd
+	--with%{!?with_sqlite3:out}-sqlite3 \
+	--with%{!?with_gtk:out}-gtk
 
 %{__make}
 
@@ -321,4 +349,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/xosd.so
 %{_datadir}/%{name}/plugins/xosd
+%endif
+
+%if %{with gtk}
+%files plugin-gtk
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/gtk.so
 %endif
