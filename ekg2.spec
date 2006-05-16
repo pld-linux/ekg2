@@ -334,7 +334,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/plugins/ioctld
 %attr(4755,root,root) %{_libexecdir}/ioctld
 
-%if %{with sqlite}
+%if %{with sqlite} || %{with sqlite3}
 %files plugin-logsqlite
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logsqlite.so
