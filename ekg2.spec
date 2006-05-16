@@ -47,6 +47,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 BuildRequires:	gpm-devel
+%{?with_gtk:BuildRequires:	gtk+2-devel}
 %{?with_gadugadu:BuildRequires:	libgadu-devel}
 %{?with_libgsm:BuildRequires:	libgsm-devel}
 %{?with_gadugadu:BuildRequires:	libjpeg-devel}
@@ -54,6 +55,7 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
+BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-devel}
 %{?with_python:BuildRequires:   python}
 %{?with_perl:BuildRequires:	perl-devel}
