@@ -212,6 +212,18 @@ gtk plugin for ekg2.
 %description plugin-gtk -l pl
 Wtyczka gtk dla ekg2.
 
+%package devel
+Summary:	ekg2 header files
+Summary(pl):	Pliki nag³ówkowe ekg2
+Group:		Development/Libraries
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description devel
+Header files for ekg2.
+
+%description devel -l pl
+Pliki nag³ówkowe ekg2.
+
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
@@ -263,7 +275,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc NEWS* README-main docs/*
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/ekg2
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logs.so
@@ -358,3 +370,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gtk.so
 %endif
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ekg2-config
+%{_includedir}/ekg2
