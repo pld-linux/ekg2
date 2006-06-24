@@ -17,7 +17,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20060221
+%define		_snap 20060622
 %endif
 
 %if %{without jabber}
@@ -36,10 +36,10 @@ Release:	0.%{_snap}.1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	http://www.ekg2.org/archive/%{name}-%{_snap}.tar.gz
-# Source0-md5:	e7785cef55c3fce2203bfbacc5c961b0
+Source0:	http://dev.null.pl/ekg2/%{name}-%{_snap}.tar.gz
+# Source0-md5:	ef14cc6e47ce0c0c8a967eeae4f115f6
 Patch0:		%{name}-perl-install.patch
-URL:		http://www.ekg2.org/
+URL:		http://dev.null.pl/ekg2/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -175,6 +175,18 @@ SQLite log plugin for ekg2.
 %description plugin-logsqlite -l pl
 Wtyczka logowania do bazy SQLite dla ekg2.
 
+%package plugin-readline
+Summary:	readline
+Summary(pl):	readline
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-readline
+readline
+
+%description plugin-readline -l pl
+readline
+
 %package plugin-sim
 Summary:	Encryption plugin for ekg2
 Summary(pl):	Wtyczka szyfruj±ca dla ekg2
@@ -229,6 +241,7 @@ Pliki nag³ówkowe ekg2.
 %patch0 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e 's/\/opt\/sqlite\/lib/\/opt\/sqlite\/lib \/usr\/lib64/' m4/sqlite.m4
+sed -i -e '/mkinstalldirs/s/=.*/= $(MKINSTALLDIRS)/' po/Makefile.in.in
 
 %build
 %{__libtoolize} --ltdl
@@ -320,7 +333,7 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-scripting-python
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
-# %{_datadir}/%{name}/plugins/jabber
+%{_datadir}/%{name}/scripts/*.py
 %endif
 
 %if %{with perl}
@@ -336,8 +349,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorarch}/auto/Ekg2/Irc
 %{perl_vendorarch}/auto/Ekg2/Irc/Irc.bs
 %attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Irc/Irc.so
-%{_datadir}/%{name}/scripts/dns.pl
-%{_datadir}/%{name}/scripts/xmms.pl
+%{_datadir}/%{name}/scripts/*.pl
 %endif
 
 %files plugin-ioctld
@@ -352,6 +364,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logsqlite.so
 %{_datadir}/%{name}/plugins/logsqlite
 %endif
+
+%files plugin-readline
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/readline.so
+%{_datadir}/%{name}/plugins/readline
 
 %files plugin-sim
 %defattr(644,root,root,755)
