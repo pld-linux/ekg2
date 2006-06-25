@@ -9,6 +9,7 @@
 %bcond_without	libgsm			# don't build libgsm plugin
 %bcond_without	python			# don't build Python plugin
 %bcond_without	perl			# don't build Perl plugin
+%bcond_without	readline		# don't build readline interface
 %bcond_without	sqlite			# don't build logsqlite plugin based on sqlite (conflicts with sqlite3)
 %bcond_with	sqlite3			# build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
@@ -60,8 +61,8 @@ BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-devel}
 %{?with_python:BuildRequires:   python}
 %{?with_perl:BuildRequires:	perl-devel}
+%{?with_readline:BuildRequires:	readline-devel}
 %{?with_perl:BuildRequires:	rpm-perlprov}
-
 BuildRequires:	sed >= 4.0
 %{?with_xosd:BuildRequires:	xosd-devel}
 %{?with_sqlite:BuildRequires:	sqlite-devel}
@@ -177,16 +178,16 @@ SQLite log plugin for ekg2.
 Wtyczka logowania do bazy SQLite dla ekg2.
 
 %package plugin-readline
-Summary:	readline
-Summary(pl):	readline
+Summary:	readline interface
+Summary(pl):	Interfejs readline
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-readline
-readline
+readline interface.
 
 %description plugin-readline -l pl
-readline
+Interfejs readline.
 
 %package plugin-sim
 Summary:	Encryption plugin for ekg2
@@ -264,6 +265,7 @@ cd ..
 	--with%{!?with_gadugadu:out}-libgadu \
 	--with%{!?with_libgsm:out}-libgsm \
 	--with%{!?with_python:out}-python \
+	--with%{!?with_readline:out}-readline \
 	--with%{!?with_xosd:out}-xosd \
 	--with%{!?with_sqlite:out}-sqlite \
 	--with%{!?with_sqlite3:out}-sqlite3 \
@@ -367,10 +369,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/plugins/logsqlite
 %endif
 
+%if %{with readline}
 %files plugin-readline
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/readline.so
 %{_datadir}/%{name}/plugins/readline
+%endif
 
 %files plugin-sim
 %defattr(644,root,root,755)
