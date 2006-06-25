@@ -17,7 +17,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20060622
+%define		_snap 20060625
 %endif
 
 %if %{without jabber}
@@ -37,8 +37,9 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dev.null.pl/ekg2/%{name}-%{_snap}.tar.gz
-# Source0-md5:	ef14cc6e47ce0c0c8a967eeae4f115f6
+# Source0-md5:	9c4bf2a697472a88b1dddd8252047400
 Patch0:		%{name}-perl-install.patch
+Patch1:		%{name}-no_scripts.patch
 URL:		http://dev.null.pl/ekg2/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -239,8 +240,9 @@ Pliki nag³ówkowe ekg2.
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
+%patch1 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
-sed -i -e 's/\/opt\/sqlite\/lib/\/opt\/sqlite\/lib \/usr\/lib64/' m4/sqlite.m4
+sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 sed -i -e '/mkinstalldirs/s/=.*/= $(MKINSTALLDIRS)/' po/Makefile.in.in
 
 %build
