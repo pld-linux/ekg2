@@ -38,7 +38,7 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dev.null.pl/ekg2/%{name}-%{_snap}.tar.gz
-# Source0-md5:	9c4bf2a697472a88b1dddd8252047400
+# Source0-md5:	c77ef929908c838dd0b22ad7c1538905
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-no_scripts.patch
 URL:		http://dev.null.pl/ekg2/
