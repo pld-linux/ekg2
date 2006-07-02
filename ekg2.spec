@@ -18,7 +18,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20060625
+%define		_snap 20060630
 %endif
 
 %if %{without jabber}
@@ -59,7 +59,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-devel}
-%{?with_python:BuildRequires:   python}
+%{?with_python:BuildRequires:	rpm-pythonprov}
 %{?with_perl:BuildRequires:	perl-devel}
 %{?with_readline:BuildRequires:	readline-devel}
 %{?with_perl:BuildRequires:	rpm-perlprov}
