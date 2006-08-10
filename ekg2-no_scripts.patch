@@ -1,41 +1,18 @@
 --- ekg2-20060622/configure.ac~	2006-06-25 23:04:08.000000000 +0200
 +++ ekg2-20060622/configure.ac	2006-06-25 23:25:02.000000000 +0200
-@@ -34,6 +34,7 @@
- AC_SUBST(COMPAT)
- AC_SUBST(DLLIB)
- AC_SUBST(PLUGINS)
-+AC_SUBST(CONTRIB)
+@@ -364,7 +364,6 @@
  
- dnl FreeBSD
- AC_NEED_STDINT_H
-@@ -351,6 +352,8 @@
- 	fi
- fi
- 
-+CONTRIB=""
-+
- AC_ARG_WITH(perl,
-         [  --without-perl        Compile without perl support (perl plugin)])
- 
-@@ -361,6 +364,7 @@
+ 	if test "x$have_perl" = "xyes"; then
  		AC_CONFIG_FILES([plugins/perl/Makefile])
- 		AC_CONFIG_FILES([contrib/perl/Makefile])
+-		AC_CONFIG_FILES([contrib/perl/Makefile])
  		PLUGINS="$PLUGINS perl"
-+		CONTRIB="$CONTRIB perl"
  	fi
  fi
+@@ -378,7 +377,6 @@
  
-@@ -375,6 +379,7 @@
+ 	if test "x$have_python" = "xyes"; then
  		AC_CONFIG_FILES([plugins/python/Makefile])
- 		AC_CONFIG_FILES([contrib/python/Makefile])
+-		AC_CONFIG_FILES([contrib/python/Makefile])
  		PLUGINS="$PLUGINS python"
-+		CONTRIB="$CONTRIB python"
  	fi
  fi
- 
---- ekg2-20060622/contrib/Makefile.am~	2006-06-08 11:01:22.000000000 +0200
-+++ ekg2-20060622/contrib/Makefile.am	2006-06-25 23:30:27.000000000 +0200
-@@ -1,2 +1,2 @@
- EXTRA_DIST = 
--SUBDIRS = perl python
-+SUBDIRS = @CONTRIB@
