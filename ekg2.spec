@@ -18,7 +18,7 @@
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %else
-%define		_snap 20060630
+%define		_snap 20060806
 %endif
 
 %if %{without jabber}
@@ -38,7 +38,7 @@ Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dev.null.pl/ekg2/%{name}-%{_snap}.tar.gz
-# Source0-md5:	c77ef929908c838dd0b22ad7c1538905
+# Source0-md5:	c655a725e1da3cbacd3054675ff76d91
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-no_scripts.patch
 URL:		http://dev.null.pl/ekg2/
@@ -275,6 +275,7 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/scripts
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -337,7 +338,7 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-scripting-python
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
-%{_datadir}/%{name}/scripts/*.py
+#%{_datadir}/%{name}/scripts/*.py
 %endif
 
 %if %{with perl}
@@ -353,7 +354,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorarch}/auto/Ekg2/Irc
 %{perl_vendorarch}/auto/Ekg2/Irc/Irc.bs
 %attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Irc/Irc.so
-%{_datadir}/%{name}/scripts/*.pl
+#%{_datadir}/%{name}/scripts/*.pl
 %endif
 
 %files plugin-ioctld
