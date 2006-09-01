@@ -1,18 +1,20 @@
---- ekg2-20060622/configure.ac~	2006-06-25 23:04:08.000000000 +0200
-+++ ekg2-20060622/configure.ac	2006-06-25 23:25:02.000000000 +0200
-@@ -364,7 +364,6 @@
+--- ekg2-20060831/configure.ac.fix	2006-09-01 07:46:20.644070250 +0200
++++ ekg2-20060831/configure.ac	2006-09-01 07:46:38.705199000 +0200
+@@ -383,8 +383,6 @@
  
  	if test "x$have_perl" = "xyes"; then
  		AC_CONFIG_FILES([plugins/perl/Makefile])
 -		AC_CONFIG_FILES([contrib/perl/Makefile])
+-		CONTRIB_SUBDIRS="$CONTRIB_SUBDIRS perl"
  		PLUGINS="$PLUGINS perl"
  	fi
  fi
-@@ -378,7 +377,6 @@
+@@ -396,8 +394,6 @@
  
  	if test "x$have_python" = "xyes"; then
  		AC_CONFIG_FILES([plugins/python/Makefile])
 -		AC_CONFIG_FILES([contrib/python/Makefile])
+-		CONTRIB_SUBDIRS="$CONTRIB_SUBDIRS python"
  		PLUGINS="$PLUGINS python"
  	fi
  fi
