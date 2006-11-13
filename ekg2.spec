@@ -21,7 +21,7 @@
 %define		_snap 20060831
 %endif
 
-%if %{without jabber}
+%if !%{with jabber}
 %undefine with_gnutls
 %endif
 
