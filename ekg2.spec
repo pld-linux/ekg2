@@ -4,8 +4,8 @@
 					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_without	aspell			# build without spell-checking support with aspell
 %bcond_without	gadugadu		# don't build gg plugin
-%bcond_without  gpg			# don't build gpg plugin
-%bcond_without  gtk			# don't build gtk plugin
+%bcond_without	gpg			# don't build gpg plugin
+%bcond_without	gtk			# don't build gtk plugin
 %bcond_without	jabber			# don't build jabber plugin
 %bcond_without	gnutls			# build jabber plugin without libgnutls
 %bcond_without	libgsm			# don't build libgsm plugin
@@ -126,7 +126,7 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 Ioctld plugin for ekg2 (contains suid root binary!).
 
 %description plugin-ioctld -l pl
-Plugin ioctld dla ekg2 (zawiera program z ustawionym suid root!).
+Wtyczka ioctld dla ekg2 (zawiera program z ustawionym suid root!).
 
 %package plugin-logsqlite
 Summary:	SQLite log plugin for ekg2
