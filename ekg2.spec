@@ -31,7 +31,7 @@
 %endif
 
 Summary:	Multi-protocol instant messaging and chat client
-Summary(pl.UTF-8):   Wieloprotokołowy komunikator internetowy
+Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	1.0
 Release:	0.%{_snap}.1
@@ -81,7 +81,7 @@ Wieloprotokołowy, otwarty komunikator internetowy z wieloma pluginami.
 
 %package devel
 Summary:	ekg2 header files
-Summary(pl.UTF-8):   Pliki nagłówkowe ekg2
+Summary(pl.UTF-8):	Pliki nagłówkowe ekg2
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -93,7 +93,7 @@ Pliki nagłówkowe ekg2.
 
 %package plugin-gpg
 Summary:	gpg plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka gpg dla ekg2
+Summary(pl.UTF-8):	Wtyczka gpg dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -105,7 +105,7 @@ Wtyczka gpg dla ekg2.
 
 %package plugin-gtk
 Summary:	gtk plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka gtk dla ekg2
+Summary(pl.UTF-8):	Wtyczka gtk dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk+2
@@ -118,7 +118,7 @@ Wtyczka gtk dla ekg2.
 
 %package plugin-ioctld
 Summary:	Ioctld plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka ioctld dla ekg2
+Summary(pl.UTF-8):	Wtyczka ioctld dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -130,7 +130,7 @@ Wtyczka ioctld dla ekg2 (zawiera program z ustawionym suid root!).
 
 %package plugin-logsqlite
 Summary:	SQLite log plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka logowania do SQLite dla ekg2
+Summary(pl.UTF-8):	Wtyczka logowania do SQLite dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 %if %{with sqlite3}
@@ -147,7 +147,7 @@ Wtyczka logowania do bazy SQLite dla ekg2.
 
 %package plugin-protocol-gg
 Summary:	Gadu-gadu protocol plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka protokołu Gadu-gadu dla ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu Gadu-gadu dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -159,7 +159,7 @@ Wtyczka protokołu gadu-gadu dla ekg2.
 
 %package plugin-protocol-gsm
 Summary:	GSM VoIP protocol plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka protokołu GSM VoIP dla ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu GSM VoIP dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -171,7 +171,7 @@ Wtyczka protokołu GSM VoIP dla ekg2.
 
 %package plugin-protocol-irc
 Summary:	IRC protocol plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka protokołu IRC dla ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu IRC dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -183,7 +183,7 @@ Wtyczka protokołu IRC dla ekg2.
 
 %package plugin-protocol-jabber
 Summary:	Jabber protocol plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka protokołu Jabber dla ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu Jabber dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -195,7 +195,7 @@ Wtyczka protokołu Jabber dla ekg2.
 
 %package plugin-readline
 Summary:	readline interface
-Summary(pl.UTF-8):   Interfejs readline
+Summary(pl.UTF-8):	Interfejs readline
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -207,7 +207,7 @@ Interfejs readline.
 
 %package plugin-scripting-perl
 Summary:	Perl scripting plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka języka Perl dla ekg2
+Summary(pl.UTF-8):	Wtyczka języka Perl dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -219,7 +219,7 @@ Wtyczka skryptów Perla dla ekg2.
 
 %package plugin-scripting-python
 Summary:	Python scripting plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka języka Python dla ekg2
+Summary(pl.UTF-8):	Wtyczka języka Python dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -231,7 +231,7 @@ Wtyczka skryptów Pythona dla ekg2.
 
 %package plugin-sim
 Summary:	Encryption plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka szyfrująca dla ekg2
+Summary(pl.UTF-8):	Wtyczka szyfrująca dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -243,7 +243,7 @@ Wtyczka szyfrująca wiadomości dla ekg2.
 
 %package plugin-xosd
 Summary:	xosd plugin for ekg2
-Summary(pl.UTF-8):   Wtyczka xosd dla ekg2
+Summary(pl.UTF-8):	Wtyczka xosd dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
