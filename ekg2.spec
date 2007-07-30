@@ -77,7 +77,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Multi-protocol instant messaging and chat client with many plugins.
 
 %description -l pl.UTF-8
-Wieloprotokołowy, otwarty komunikator internetowy z wieloma pluginami.
+Wieloprotokołowy, otwarty komunikator internetowy z wieloma wtyczkami.
 
 %package devel
 Summary:	ekg2 header files
