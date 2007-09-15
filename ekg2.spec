@@ -18,8 +18,10 @@
 
 %if %{with yesterday_snapshot}
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
+%define		_ver 0.0.%{_snap}
 %else
-%define		_snap 20070113
+%define		_snap 0.1.1
+%define		_ver 0.1.1
 %endif
 
 %if !%{with jabber}
@@ -33,15 +35,15 @@
 Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
-Version:	1.0
-Release:	0.%{_snap}.1
-Epoch:		1
+Version:	%{_ver}
+Release:	1
+Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.gz
-# Source0-md5:	1922ef21e6e2568887ae8271f0c5f9c1
+# Source0-md5:	8c64ab909687b9ac3798caa7736d7b2a
 Patch0:		%{name}-perl-install.patch
-Patch1:		%{name}-no_scripts.patch
+#Patch1:		%{name}-no_scripts.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -49,23 +51,23 @@ BuildRequires:	automake
 %{?with_jabber:BuildRequires:	expat-devel}
 BuildRequires:	gettext-devel
 %{?with_gadugadu:BuildRequires:	giflib-devel}
-%{?with_gadugadu:BuildRequires:	libgadu-devel}
-%{?with_gadugadu:BuildRequires:	libjpeg-devel}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 %{?with_gpg:BuildRequires:	gpgme-devel}
 BuildRequires:	gpm-devel
 %{?with_gtk:BuildRequires:	gtk+2-devel}
+%{?with_gadugadu:BuildRequires:	libgadu-devel}
 %{?with_libgsm:BuildRequires:	libgsm-devel}
+%{?with_gadugadu:BuildRequires:	libjpeg-devel}
 BuildRequires:	libltdl-devel
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel >= 0.9.7d
+%{?with_perl:BuildRequires:	perl-devel}
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-devel}
-%{?with_python:BuildRequires:	rpm-pythonprov}
-%{?with_perl:BuildRequires:	perl-devel}
-%{?with_perl:BuildRequires:	rpm-perlprov}
 %{?with_readline:BuildRequires:	readline-devel}
+%{?with_perl:BuildRequires:	rpm-perlprov}
+%{?with_python:BuildRequires:	rpm-pythonprov}
 BuildRequires:	sed >= 4.0
 %{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
@@ -256,7 +258,7 @@ Wtyczka xosd dla ekg2.
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
@@ -311,15 +313,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ekg2
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
+%attr(755,root,root) %{_libdir}/%{name}/plugins/autoresponder.so
+%{_datadir}/%{name}/plugins/autoresponder
 %attr(755,root,root) %{_libdir}/%{name}/plugins/httprc_xajax.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logs.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/mail.so
+%{_datadir}/%{name}/plugins/mail
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ncurses.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/pcm.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/rc.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/rot13.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/sms.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/xmsg.so
+%{_datadir}/%{name}/plugins/xmsg
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/*.txt
@@ -404,14 +410,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorarch}/auto/Ekg2/Irc
 %{perl_vendorarch}/auto/Ekg2/Irc/Irc.bs
 %attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Irc/Irc.so
-#%{_datadir}/%{name}/scripts/*.pl
+%{_datadir}/%{name}/scripts/*.pl
 %endif
 
 %if %{with python}
 %files plugin-scripting-python
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
-#%{_datadir}/%{name}/scripts/*.py
+%{_datadir}/%{name}/scripts/*.py
 %endif
 
 %files plugin-sim
