@@ -24,7 +24,7 @@
 %define		_ver 0.1.1
 %endif
 
-%if !%{with jabber}
+%if %{without jabber}
 %undefine with_gnutls
 %endif
 
@@ -36,7 +36,7 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	%{_ver}
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
