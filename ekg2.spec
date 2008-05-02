@@ -290,7 +290,8 @@ cd ..
 	--with%{!?with_sqlite3:out}-sqlite3 \
 	--with%{!?with_xosd:out}-xosd
 
-%{__make}
+%{__make} \
+	CFLAGS="-D_GNU_SOURCE"
 
 %install
 rm -rf $RPM_BUILD_ROOT
