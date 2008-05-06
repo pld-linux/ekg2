@@ -274,6 +274,8 @@ cd ..
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+# for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
+CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 %configure \
 	--enable-unicode \
 	--with%{!?with_aspell:out}-aspell \
@@ -290,8 +292,7 @@ cd ..
 	--with%{!?with_sqlite3:out}-sqlite3 \
 	--with%{!?with_xosd:out}-xosd
 
-%{__make} \
-	CFLAGS="-D_GNU_SOURCE"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
