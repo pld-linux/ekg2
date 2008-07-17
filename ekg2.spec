@@ -44,7 +44,7 @@ Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.gz
 # Source0-md5:	8c64ab909687b9ac3798caa7736d7b2a
 Patch0:		%{name}-perl-install.patch
-#Patch1: %{name}-no_scripts.patch
+#Patch1:	%{name}-no_scripts.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -84,7 +84,6 @@ Multi-protocol instant messaging and chat client with many plugins.
 %description -l pl.UTF-8
 Wieloprotokołowy, otwarty komunikator internetowy z wieloma wtyczkami.
 
-%if %{without yesterday_snapshot}
 %package devel
 Summary:	ekg2 header files
 Summary(pl.UTF-8):	Pliki nagłówkowe ekg2
@@ -96,11 +95,7 @@ Header files for ekg2.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe ekg2.
-%endif
 
-Pliki nagłówkowe ekg2.
-%if %{with yesterday_snapshot}
-Pliki nagłówkowe ekg2.
 %package plugin-feed
 Summary:	feed plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka feed dla ekg2
@@ -112,9 +107,7 @@ feed plugin for ekg2.
 
 %description plugin-feed -l pl.UTF-8
 Wtyczka feed dla ekg2.
-%endif
 
-Wtyczka feed dla ekg2.
 %package plugin-gpg
 Summary:	gpg plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka gpg dla ekg2
@@ -152,7 +145,6 @@ Ioctld plugin for ekg2 (contains suid root binary!).
 %description plugin-ioctld -l pl.UTF-8
 Wtyczka ioctld dla ekg2 (zawiera program z ustawionym suid root!).
 
-%if %{with yesterday_snapshot}
 %package plugin-jogger
 Summary:	Jogger plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka jogger dla ekg2
@@ -164,9 +156,7 @@ Jogger plugin for ekg2.
 
 %description plugin-jogger -l pl.UTF-8
 Wtyczka jogger dla ekg2.
-%endif
 
-Wtyczka jogger dla ekg2.
 %package plugin-logsqlite
 Summary:	SQLite log plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka logowania do SQLite dla ekg2
@@ -232,7 +222,6 @@ Jabber protocol plugin for ekg2.
 %description plugin-protocol-jabber -l pl.UTF-8
 Wtyczka protokołu Jabber dla ekg2.
 
-%if %{with yesterday_snapshot}
 %package plugin-protocol-polchat
 Summary:	Polchat protocol plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka protokołu polchat dla ekg2
@@ -244,9 +233,7 @@ Polchat protocol plugin for ekg2.
 
 %description plugin-protocol-polchat -l pl.UTF-8
 Wtyczka protokołu polchat dla ekg2.
-%endif
 
-Wtyczka protokołu polchat dla ekg2.
 %package plugin-readline
 Summary:	readline interface
 Summary(pl.UTF-8):	Interfejs readline
