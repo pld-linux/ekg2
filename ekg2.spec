@@ -17,12 +17,12 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
-%if %{with yesterday_snapshot}
-%define		_snap %(date +%%Y%%m%%d -d yesterday)
-%define		_ver 0.0.%{_snap}
-%else
+%if %{without yesterday_snapshot}
 %define		_snap 0.1.1
 %define		_ver 0.1.1
+%else
+%define		_snap %(date +%%Y%%m%%d -d yesterday)
+%define		_ver 0.0.%{_snap}
 %endif
 
 %if %{without jabber}
