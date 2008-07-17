@@ -3,6 +3,7 @@
 %bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
 					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_without	aspell			# build without spell-checking support with aspell
+%bcond_without	feed			# don't build feed plugin
 %bcond_without	gadugadu		# don't build gg plugin
 %bcond_without	gpg			# don't build gpg plugin
 %bcond_without	gtk			# don't build gtk plugin
@@ -12,8 +13,8 @@
 %bcond_without	perl			# don't build Perl plugin
 %bcond_without	python			# don't build Python plugin
 %bcond_without	readline		# don't build readline interface
-%bcond_without	sqlite			# don't build logsqlite plugin based on sqlite (conflicts with sqlite3)
-%bcond_with	sqlite3			# build logsqlite plugin based on sqlite3
+%bcond_with	sqlite			# build logsqlite plugin based on sqlite (conflicts with sqlite3)
+%bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
 %if %{with yesterday_snapshot}
@@ -28,15 +29,15 @@
 %undefine with_gnutls
 %endif
 
-%if %{with sqlite3}
-%undefine sqlite
+%if %{with sqlite}
+%undefine sqlite3
 %endif
 
 Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	%{_ver}
-Release:	3.1
+Release:	3.2
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
@@ -48,7 +49,9 @@ URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
-%{?with_jabber:BuildRequires:	expat-devel}
+%if %{with feed} || %{with jabber}
+BuildRequires:	expat-devel
+%endif
 BuildRequires:	gettext-devel
 %{?with_gadugadu:BuildRequires:	giflib-devel}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
@@ -81,6 +84,7 @@ Multi-protocol instant messaging and chat client with many plugins.
 %description -l pl.UTF-8
 Wieloprotokołowy, otwarty komunikator internetowy z wieloma wtyczkami.
 
+%if %{without yesterday_snapshot}
 %package devel
 Summary:	ekg2 header files
 Summary(pl.UTF-8):	Pliki nagłówkowe ekg2
@@ -92,6 +96,21 @@ Header files for ekg2.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe ekg2.
+%endif
+
+%if %{with yesterday_snapshot}
+%package plugin-feed
+Summary:	feed plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka feed dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-feed
+feed plugin for ekg2.
+
+%description plugin-feed -l pl.UTF-8
+Wtyczka feed dla ekg2.
+%endif
 
 %package plugin-gpg
 Summary:	gpg plugin for ekg2
@@ -129,6 +148,20 @@ Ioctld plugin for ekg2 (contains suid root binary!).
 
 %description plugin-ioctld -l pl.UTF-8
 Wtyczka ioctld dla ekg2 (zawiera program z ustawionym suid root!).
+
+%if %{with yesterday_snapshot}
+%package plugin-jogger
+Summary:	Jogger plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka jogger dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-jogger
+Jogger plugin for ekg2.
+
+%description plugin-jogger -l pl.UTF-8
+Wtyczka jogger dla ekg2.
+%endif
 
 %package plugin-logsqlite
 Summary:	SQLite log plugin for ekg2
@@ -194,6 +227,20 @@ Jabber protocol plugin for ekg2.
 
 %description plugin-protocol-jabber -l pl.UTF-8
 Wtyczka protokołu Jabber dla ekg2.
+
+%if %{with yesterday_snapshot}
+%package plugin-protocol-polchat
+Summary:	Polchat protocol plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu polchat dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-protocol-polchat
+Polchat protocol plugin for ekg2.
+
+%description plugin-protocol-polchat -l pl.UTF-8
+Wtyczka protokołu polchat dla ekg2.
+%endif
 
 %package plugin-readline
 Summary:	readline interface
@@ -283,7 +330,11 @@ CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 	%{!?with_gpg:--without-gpg} \
 	--with%{!?with_gtk:out}-gtk \
 	--with%{!?with_gnutls:out}-libgnutls \
-	--with%{!?with_jabber:out}-expat \
+%if %{with feed} || %{with jabber}
+        --with-expat \
+%else
+        --without-expat \
+%endif
 	--with%{!?with_libgsm:out}-libgsm \
 	%{!?with_perl:--without-perl} \
 	--with%{!?with_python:out}-python \
@@ -340,10 +391,18 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/scripts
 %{_datadir}/%{name}/themes
 
+%if %{without yesterday_snapshot}
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ekg2-config
 %{_includedir}/ekg2
+%endif
+
+%if %{with yesterday_snapshot}
+%files plugin-feed
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/feed.so
+%endif
 
 %if %{with gpg}
 %files plugin-gpg
@@ -362,6 +421,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ioctld.so
 %{_datadir}/%{name}/plugins/ioctld
 %attr(4755,root,root) %{_libexecdir}/ioctld
+
+%if %{with yesterday_snapshot}
+%files plugin-jogger
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/jogger.so
+%endif
 
 %if %{with sqlite} || %{with sqlite3}
 %files plugin-logsqlite
@@ -391,6 +456,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/jabber.so
 %{_datadir}/%{name}/plugins/jabber
+%endif
+
+%if %{with yesterday_snapshot}
+%files plugin-protocol-polchat
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/polchat.so
 %endif
 
 %if %{with readline}
