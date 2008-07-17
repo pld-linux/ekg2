@@ -44,7 +44,7 @@ Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.gz
 # Source0-md5:	8c64ab909687b9ac3798caa7736d7b2a
 Patch0:		%{name}-perl-install.patch
-#Patch1:		%{name}-no_scripts.patch
+#Patch1: %{name}-no_scripts.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -98,7 +98,9 @@ Header files for ekg2.
 Pliki nagłówkowe ekg2.
 %endif
 
+Pliki nagłówkowe ekg2.
 %if %{with yesterday_snapshot}
+Pliki nagłówkowe ekg2.
 %package plugin-feed
 Summary:	feed plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka feed dla ekg2
@@ -112,6 +114,7 @@ feed plugin for ekg2.
 Wtyczka feed dla ekg2.
 %endif
 
+Wtyczka feed dla ekg2.
 %package plugin-gpg
 Summary:	gpg plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka gpg dla ekg2
@@ -163,6 +166,7 @@ Jogger plugin for ekg2.
 Wtyczka jogger dla ekg2.
 %endif
 
+Wtyczka jogger dla ekg2.
 %package plugin-logsqlite
 Summary:	SQLite log plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka logowania do SQLite dla ekg2
@@ -242,6 +246,7 @@ Polchat protocol plugin for ekg2.
 Wtyczka protokołu polchat dla ekg2.
 %endif
 
+Wtyczka protokołu polchat dla ekg2.
 %package plugin-readline
 Summary:	readline interface
 Summary(pl.UTF-8):	Interfejs readline
@@ -331,9 +336,9 @@ CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 	--with%{!?with_gtk:out}-gtk \
 	--with%{!?with_gnutls:out}-libgnutls \
 %if %{with feed} || %{with jabber}
-        --with-expat \
+		--with-expat \
 %else
-        --without-expat \
+		--without-expat \
 %endif
 	--with%{!?with_libgsm:out}-libgsm \
 	%{!?with_perl:--without-perl} \
