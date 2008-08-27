@@ -20,9 +20,11 @@
 %if %{without yesterday_snapshot}
 %define		_snap 0.1.1
 %define		_ver 0.1.1
+%define		_tarballformat gz
 %else
 %define		_snap %(date +%%Y%%m%%d -d yesterday)
 %define		_ver 0.0.%{_snap}
+%define		_tarballformat bz2
 %endif
 
 %if %{without jabber}
@@ -41,7 +43,7 @@ Release:	3.2
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.gz
+Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.%{_tarballformat}
 # Source0-md5:	8c64ab909687b9ac3798caa7736d7b2a
 Patch0:		%{name}-perl-install.patch
 #Patch1:	%{name}-no_scripts.patch
