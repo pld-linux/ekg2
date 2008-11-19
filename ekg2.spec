@@ -39,7 +39,7 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	%{_ver}
-Release:	4.1
+Release:	5
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
