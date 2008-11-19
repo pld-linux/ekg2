@@ -39,7 +39,7 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	%{_ver}
-Release:	4
+Release:	4.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
@@ -47,6 +47,7 @@ Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.%{_tarballformat}
 # Source0-md5:	8c64ab909687b9ac3798caa7736d7b2a
 Patch0:		%{name}-perl-install.patch
 #Patch1:	%{name}-no_scripts.patch
+Patch2:		%{name}-missing-xwcslen.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -300,6 +301,7 @@ Wtyczka xosd dla ekg2.
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
 #%patch1 -p1
+%patch2 -p1
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
