@@ -1,5 +1,5 @@
---- /home/users/baggins/devel/PLD/rpm/BUILD/ekg2-0.1.1/plugins/ncurses/old.c~	2007-02-25 18:10:22.000000000 +0100
-+++ /home/users/baggins/devel/PLD/rpm/BUILD/ekg2-0.1.1/plugins/ncurses/old.c	2008-11-19 13:21:40.000000000 +0100
+--- ekg2-0.1.1/plugins/ncurses/old.c~	2007-02-25 18:10:22.000000000 +0100
++++ ekg2-0.1.1/plugins/ncurses/old.c	2008-11-19 13:21:40.000000000 +0100
 @@ -53,6 +53,7 @@
  
  #include <ekg/queries.h>
