@@ -29,14 +29,14 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	0.1.3
-Release:	0.%{snap_}.1
+Release:	0.%{_snap}.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	%{name}-%{_snap}.tar.bz2
 # Source0-md5:	4e7fdba759f3fd43145d3afbc91e8fe1
 Patch0:		%{name}-perl-install.patch
-Patch1:                %{name}-missing-xwcslen.patch
+Patch1:		%{name}-missing-xwcslen.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
