@@ -190,6 +190,18 @@ GSM VoIP protocol plugin for ekg2.
 %description plugin-protocol-gsm -l pl.UTF-8
 Wtyczka protokołu GSM VoIP dla ekg2.
 
+%package plugin-protocol-icq
+Summary:	ICQ protocol plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu ICQ dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-protocol-icq
+ICQ protocol plugin for ekg2.
+
+%description plugin-protocol-icq -l pl.UTF-8
+Wtyczka protokołu ICQ dla ekg.
+
 %package plugin-protocol-irc
 Summary:	IRC protocol plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka protokołu IRC dla ekg2
@@ -418,6 +430,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gsm.so
 %endif
+
+%files plugin-protocol-icq
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/icq.so
 
 %files plugin-protocol-irc
 %defattr(644,root,root,755)
