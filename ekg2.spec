@@ -200,7 +200,7 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 ICQ protocol plugin for ekg2.
 
 %description plugin-protocol-icq -l pl.UTF-8
-Wtyczka protokołu ICQ dla ekg.
+Wtyczka protokołu ICQ dla ekg2.
 
 %package plugin-protocol-irc
 Summary:	IRC protocol plugin for ekg2
