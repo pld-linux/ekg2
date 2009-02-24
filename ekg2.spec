@@ -37,6 +37,7 @@ Source0:	%{name}-%{_snap}.tar.bz2
 # Source0-md5:	4e7fdba759f3fd43145d3afbc91e8fe1
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-missing-xwcslen.patch
+Patch2:		%{name}-gtk.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -49,7 +50,7 @@ BuildRequires:	gettext-devel
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 %{?with_gpg:BuildRequires:	gpgme-devel}
 BuildRequires:	gpm-devel
-%{?with_gtk:BuildRequires:	gtk+2-devel}
+%{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.14.1}
 %{?with_gadugadu:BuildRequires:	libgadu-devel}
 %{?with_libgsm:BuildRequires:	libgsm-devel}
 %{?with_gadugadu:BuildRequires:	libjpeg-devel}
@@ -117,7 +118,7 @@ Summary:	gtk plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka gtk dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	gtk+2
+Requires:	gtk+2 >= 2:2.14.1
 
 %description plugin-gtk
 gtk plugin for ekg2.
@@ -302,6 +303,8 @@ Wtyczka xosd dla ekg2.
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
 #%%patch1 -p1
+%patch2 -p1
+
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
