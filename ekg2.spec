@@ -36,7 +36,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	%{name}-%{_snap}.tar.bz2
-# Source0-md5:	a12eaafadd2fb4440781038587b77250
+# Source0-md5:	2aa917d5b3ae061c939898cdc698fcbe
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-missing-xwcslen.patch
 Patch2:		%{name}-gtk.patch
