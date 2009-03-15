@@ -1,3 +1,5 @@
+# TODO:
+# - autotools (call it directly, or fix autogen.sh)
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
@@ -15,7 +17,7 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
-%define		_snap 20090120
+%define		_snap 20090310
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -34,7 +36,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	%{name}-%{_snap}.tar.bz2
-# Source0-md5:	4e7fdba759f3fd43145d3afbc91e8fe1
+# Source0-md5:	a12eaafadd2fb4440781038587b77250
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-missing-xwcslen.patch
 Patch2:		%{name}-gtk.patch
@@ -309,17 +311,7 @@ sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
 %build
-%{__libtoolize} --ltdl
-cd libltdl
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-cd ..
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
+NOCONFIGURE=1 ./autogen.sh || true
 # for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
 CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 %configure \
