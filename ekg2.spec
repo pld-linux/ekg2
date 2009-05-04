@@ -1,7 +1,5 @@
 #
 # Conditional build:
-%bcond_with	yesterday_snapshot	# Build most current ekg2 snapshot
-					# (must use ./builder -n5 or plain rpmbuild)
 %bcond_without	aspell			# build without spell-checking support with aspell
 %bcond_without	feed			# don't build feed plugin
 %bcond_without	gadugadu		# don't build gg plugin
@@ -17,16 +15,6 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
-%if %{without yesterday_snapshot}
-%define		_snap 0.1.1
-%define		_ver 0.1.1
-%define		_tarballformat gz
-%else
-%define		_snap %(date +%%Y%%m%%d -d yesterday)
-%define		_ver 0.0.%{_snap}
-%define		_tarballformat bz2
-%endif
-
 %if %{without jabber}
 %undefine with_gnutls
 %endif
@@ -38,12 +26,12 @@
 Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
-Version:	%{_ver}
+Version:	0.1.1
 Release:	8
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.%{_tarballformat}
+Source0:	http://pl.ekg2.org/%{name}-%{version}.tar.gz
 # Source0-md5:	8c64ab909687b9ac3798caa7736d7b2a
 Patch0:		%{name}-perl-install.patch
 #Patch1:	%{name}-no_scripts.patch
@@ -298,7 +286,7 @@ xosd plugin for ekg2.
 Wtyczka xosd dla ekg2.
 
 %prep
-%setup -q -n %{name}-%{_snap}
+%setup -q -n %{name}-%{version}
 %patch0 -p1
 #%patch1 -p1
 %patch2 -p1
@@ -387,18 +375,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}/scripts
 %{_datadir}/%{name}/themes
 
-%if %{without yesterday_snapshot}
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ekg2-config
 %{_includedir}/ekg2
-%endif
-
-%if %{with yesterday_snapshot}
-%files plugin-feed
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/plugins/feed.so
-%endif
 
 %if %{with gpg}
 %files plugin-gpg
@@ -417,12 +397,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ioctld.so
 %{_datadir}/%{name}/plugins/ioctld
 %attr(4755,root,root) %{_libexecdir}/ioctld
-
-%if %{with yesterday_snapshot}
-%files plugin-jogger
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/plugins/jogger.so
-%endif
 
 %if %{with sqlite} || %{with sqlite3}
 %files plugin-logsqlite
@@ -452,12 +426,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/jabber.so
 %{_datadir}/%{name}/plugins/jabber
-%endif
-
-%if %{with yesterday_snapshot}
-%files plugin-protocol-polchat
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/plugins/polchat.so
 %endif
 
 %if %{with readline}
