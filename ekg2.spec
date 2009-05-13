@@ -15,6 +15,8 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
+# Please, test all modules before updating. If you want just try new version,
+# use DEVEL branch.
 %define		_snap 20090511
 
 %if %{without jabber}
