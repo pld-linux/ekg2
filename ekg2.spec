@@ -241,6 +241,18 @@ Polchat protocol plugin for ekg2.
 %description plugin-protocol-polchat -l pl.UTF-8
 Wtyczka protokołu polchat dla ekg2.
 
+%package plugin-protocol-rivchat
+Summary:	Rivchat protocol plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu rivchat dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-protocol-rivchat
+Rivchat protocol plugin for ekg2.
+
+%description plugin-protocol-rivchat -l pl.UTF-8
+Wtyczka protokołu rivchat dla ekg2.
+
 %package plugin-readline
 Summary:	readline interface
 Summary(pl.UTF-8):	Interfejs readline
@@ -455,6 +467,10 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-protocol-polchat
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/polchat.so
+
+%files plugin-protocol-rivchat
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rivchat.so
 
 %if %{with readline}
 %files plugin-readline
