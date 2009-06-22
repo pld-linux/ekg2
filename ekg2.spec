@@ -17,7 +17,9 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
-%define		_snap 20090310
+# Please, test all modules before updating. If you want just try new version,
+# use DEVEL branch.
+%define		_snap 20090622
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -35,10 +37,11 @@ Release:	0.%{_snap}.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	%{name}-%{_snap}.tar.bz2
-# Source0-md5:	2aa917d5b3ae061c939898cdc698fcbe
+Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	3ac6f70fdf92daf05d6975763eda460f
 Patch0:		%{name}-perl-install.patch
-Patch1:		%{name}-missing-xwcslen.patch
+# Is it really needed?
+# Patch1:		%{name}-missing-xwcslen.patch
 Patch2:		%{name}-gtk.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
@@ -240,6 +243,18 @@ Polchat protocol plugin for ekg2.
 
 %description plugin-protocol-polchat -l pl.UTF-8
 Wtyczka protokołu polchat dla ekg2.
+
+%package plugin-protocol-rivchat
+Summary:	Rivchat protocol plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka protokołu rivchat dla ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-protocol-rivchat
+Rivchat protocol plugin for ekg2.
+
+%description plugin-protocol-rivchat -l pl.UTF-8
+Wtyczka protokołu rivchat dla ekg2.
 
 %package plugin-readline
 Summary:	readline interface
@@ -445,6 +460,10 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-protocol-polchat
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/polchat.so
+
+%files plugin-protocol-rivchat
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rivchat.so
 
 %if %{with readline}
 %files plugin-readline
