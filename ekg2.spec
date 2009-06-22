@@ -1,5 +1,10 @@
 # TODO:
 # - autotools (call it directly, or fix autogen.sh)
+# - warning: Installed (but unpackaged) file(s) found:
+#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
+#   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
+#   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/Irc/.packlist
+# - Is missing-xwcslen.patch needed?
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
@@ -268,6 +273,18 @@ readline interface.
 %description plugin-readline -l pl.UTF-8
 Interfejs readline.
 
+%package plugin-remote
+Summary:	Remote contol interface
+Summary(pl.UTF-8):	Zdalne sterowanie ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-remote
+Remote control interface.
+
+%description plugin-remote -l pl.UTF-8
+Zdalne sterowanie ekg2.
+
 %package plugin-scripting-perl
 Summary:	Perl scripting plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka języka Perl dla ekg2
@@ -470,6 +487,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/readline.so
 %{_datadir}/%{name}/plugins/readline
+%endif
+
+%if %{with readline}
+%files plugin-remote
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/remote.so
 %endif
 
 %if %{with perl}
