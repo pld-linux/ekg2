@@ -1,3 +1,10 @@
+# TODO:
+# - autotools (call it directly, or fix autogen.sh)
+# - warning: Installed (but unpackaged) file(s) found:
+#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
+#   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
+#   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/Irc/.packlist
+# - Is missing-xwcslen.patch needed?
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
@@ -17,7 +24,7 @@
 
 # Please, test all modules before updating. If you want just try new version,
 # use DEVEL branch.
-%define		_snap 20090511
+%define		_snap 20090622
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -36,9 +43,10 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	053be64c441d08cb719bf8267faba6f1
+# Source0-md5:	3ac6f70fdf92daf05d6975763eda460f
 Patch0:		%{name}-perl-install.patch
-Patch1:		%{name}-missing-xwcslen.patch
+# Is it really needed?
+# Patch1:		%{name}-missing-xwcslen.patch
 Patch2:		%{name}-gtk.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
@@ -265,6 +273,18 @@ readline interface.
 %description plugin-readline -l pl.UTF-8
 Interfejs readline.
 
+%package plugin-remote
+Summary:	Remote contol interface
+Summary(pl.UTF-8):	Zdalne sterowanie ekg2
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description plugin-remote
+Remote control interface.
+
+%description plugin-remote -l pl.UTF-8
+Zdalne sterowanie ekg2.
+
 %package plugin-scripting-perl
 Summary:	Perl scripting plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka języka Perl dla ekg2
@@ -323,17 +343,7 @@ sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
 %build
-%{__libtoolize} --ltdl
-cd libltdl
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-cd ..
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
+NOCONFIGURE=1 ./autogen.sh || true
 # for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
 CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 %configure \
@@ -477,6 +487,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/readline.so
 %{_datadir}/%{name}/plugins/readline
+%endif
+
+%if %{with readline}
+%files plugin-remote
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/plugins/remote.so
 %endif
 
 %if %{with perl}
