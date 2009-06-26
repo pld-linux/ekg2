@@ -226,16 +226,16 @@ IRC protocol plugin for ekg2.
 Wtyczka protokołu IRC dla ekg2.
 
 %package plugin-protocol-jabber
-Summary:	Jabber protocol plugin for ekg2
-Summary(pl.UTF-8):	Wtyczka protokołu Jabber dla ekg2
+Summary:	Jabber and Tlen protocols plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka protokołów Jabber i Tlen dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-protocol-jabber
-Jabber protocol plugin for ekg2.
+Jabber and Tlen protocols plugin for ekg2.
 
 %description plugin-protocol-jabber -l pl.UTF-8
-Wtyczka protokołu Jabber dla ekg2.
+Wtyczka protokołów Jabber i Tlen dla ekg2.
 
 %package plugin-protocol-polchat
 Summary:	Polchat protocol plugin for ekg2
