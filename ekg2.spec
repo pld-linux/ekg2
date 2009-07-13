@@ -1,5 +1,5 @@
 # TODO:
-# - autotools (call it directly, or fix autogen.sh)
+# - autotools
 # - warning: Installed (but unpackaged) file(s) found:
 #   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
 #   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
@@ -24,7 +24,7 @@
 
 # Please, test all modules before updating. If you want just try new version,
 # use DEVEL branch.
-%define		_snap 20090622
+%define		_snap 20090713
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -43,7 +43,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	3ac6f70fdf92daf05d6975763eda460f
+# Source0-md5:	00c8f3d98c5e766b5db96befba6c56b0
 Patch0:		%{name}-perl-install.patch
 # Is it really needed?
 # Patch1:		%{name}-missing-xwcslen.patch
@@ -343,7 +343,6 @@ sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
 %build
-NOCONFIGURE=1 ./autogen.sh || true
 # for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
 CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 %configure \
