@@ -1,5 +1,4 @@
 # TODO:
-# - autotools
 # - warning: Installed (but unpackaged) file(s) found:
 #   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
 #   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
@@ -24,7 +23,8 @@
 
 # Please, test all modules before updating. If you want just try new version,
 # use DEVEL branch.
-%define		_snap 20090713
+
+%define		_snap 20090819
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -37,13 +37,13 @@
 Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
-Version:	0.1.3
+Version:	0.3
 Release:	0.%{_snap}.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	00c8f3d98c5e766b5db96befba6c56b0
+# Source0-md5:	f217866b81cb379cb2da27be90becbcb
 Patch0:		%{name}-perl-install.patch
 # Is it really needed?
 # Patch1:		%{name}-missing-xwcslen.patch
@@ -55,7 +55,7 @@ BuildRequires:	automake
 %if %{with feed} || %{with jabber}
 BuildRequires:	expat-devel
 %endif
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-devel >= 0.17-8
 %{?with_gadugadu:BuildRequires:	giflib-devel}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 %{?with_gpg:BuildRequires:	gpgme-devel}
@@ -226,16 +226,16 @@ IRC protocol plugin for ekg2.
 Wtyczka protokołu IRC dla ekg2.
 
 %package plugin-protocol-jabber
-Summary:	Jabber protocol plugin for ekg2
-Summary(pl.UTF-8):	Wtyczka protokołu Jabber dla ekg2
+Summary:	Jabber and Tlen protocols plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka protokołów Jabber i Tlen dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description plugin-protocol-jabber
-Jabber protocol plugin for ekg2.
+Jabber and Tlen protocols plugin for ekg2.
 
 %description plugin-protocol-jabber -l pl.UTF-8
-Wtyczka protokołu Jabber dla ekg2.
+Wtyczka protokołów Jabber i Tlen dla ekg2.
 
 %package plugin-protocol-polchat
 Summary:	Polchat protocol plugin for ekg2
@@ -343,6 +343,13 @@ sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
 %build
+%{__gettextize}
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoheader}
+%{__automake}
+%{__autoconf}
+
 # for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
 CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 %configure \
