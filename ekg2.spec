@@ -45,9 +45,8 @@ Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
 # Source0-md5:	f217866b81cb379cb2da27be90becbcb
 Patch0:		%{name}-perl-install.patch
-# Is it really needed?
-# Patch1:		%{name}-missing-xwcslen.patch
-Patch2:		%{name}-gtk.patch
+Patch1:		%{name}-gtk.patch
+Patch2:		%{name}-largefile.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -336,7 +335,7 @@ Wtyczka xosd dla ekg2.
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
-#%%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 
 sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
