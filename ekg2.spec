@@ -24,7 +24,7 @@
 # Please, test all modules before updating. If you want just try new version,
 # use DEVEL branch.
 
-%define		_snap 20090819
+%define		_snap 20090828
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -43,7 +43,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	f217866b81cb379cb2da27be90becbcb
+# Source0-md5:	a2121ea05a1f16ce970c1719cba2dbc0
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 Patch2:		%{name}-largefile.patch
@@ -338,7 +338,6 @@ Wtyczka xosd dla ekg2.
 %patch1 -p1
 %patch2 -p1
 
-sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
 %build
