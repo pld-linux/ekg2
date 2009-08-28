@@ -3,7 +3,6 @@
 #   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
 #   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
 #   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/Irc/.packlist
-# - Is missing-xwcslen.patch needed?
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
