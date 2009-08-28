@@ -1,10 +1,8 @@
 # TODO:
-# - autotools (call it directly, or fix autogen.sh)
 # - warning: Installed (but unpackaged) file(s) found:
 #   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
 #   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
 #   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/Irc/.packlist
-# - Is missing-xwcslen.patch needed?
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
@@ -24,7 +22,8 @@
 
 # Please, test all modules before updating. If you want just try new version,
 # use DEVEL branch.
-%define		_snap 20090622
+
+%define		_snap 20090828
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -37,17 +36,16 @@
 Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
-Version:	0.1.3
-Release:	0.%{_snap}.2
+Version:	0.3
+Release:	0.%{_snap}.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	3ac6f70fdf92daf05d6975763eda460f
+# Source0-md5:	a2121ea05a1f16ce970c1719cba2dbc0
 Patch0:		%{name}-perl-install.patch
-# Is it really needed?
-# Patch1:		%{name}-missing-xwcslen.patch
-Patch2:		%{name}-gtk.patch
+Patch1:		%{name}-gtk.patch
+Patch2:		%{name}-largefile.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -55,7 +53,7 @@ BuildRequires:	automake
 %if %{with feed} || %{with jabber}
 BuildRequires:	expat-devel
 %endif
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-devel >= 0.17-8
 %{?with_gadugadu:BuildRequires:	giflib-devel}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 %{?with_gpg:BuildRequires:	gpgme-devel}
@@ -336,14 +334,19 @@ Wtyczka xosd dla ekg2.
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
-#%%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 
-sed -i -e 's/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/' configure.ac
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
 %build
-NOCONFIGURE=1 ./autogen.sh || true
+%{__gettextize}
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoheader}
+%{__automake}
+%{__autoconf}
+
 # for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
 CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 %configure \
