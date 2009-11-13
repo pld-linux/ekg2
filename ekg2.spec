@@ -23,7 +23,7 @@
 # Please, test all modules before updating. If you want just try new version,
 # use DEVEL branch.
 
-%define		_snap 20090828
+%define		_snap 20091113
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -42,7 +42,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	a2121ea05a1f16ce970c1719cba2dbc0
+# Source0-md5:	4e583bcda85944222632f1267e0d4a9f
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 Patch2:		%{name}-largefile.patch
