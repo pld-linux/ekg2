@@ -20,7 +20,7 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
-%define		_snap 20091113
+%define		_snap 20100126
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -34,16 +34,14 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	0.3
-Release:	0.%{_snap}.2
+Release:	0.%{_snap}.1
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	4e583bcda85944222632f1267e0d4a9f
+# Source0-md5:	9ac4d78be72744f617d19e83a0c7761a
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
-Patch2:		%{name}-largefile.patch
-Patch3:		%{name}-python-x8664-segfault.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -333,8 +331,6 @@ Wtyczka xosd dla ekg2.
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
 
