@@ -66,7 +66,6 @@ BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-devel}
 %{?with_readline:BuildRequires:	readline-devel}
-%{?with_perl:BuildRequires:	rpm-perlprov}
 %{?with_python:BuildRequires:	rpm-pythonprov}
 BuildRequires:	sed >= 4.0
 %{?with_sqlite:BuildRequires:	sqlite-devel}
