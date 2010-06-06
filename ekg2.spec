@@ -20,7 +20,7 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
 
-%define		_snap 20100212
+%define		_snap 20100606
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -39,7 +39,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	50620cc6db2c8026b6a373a6782ed409
+# Source0-md5:	0d8348be0559c478835a767dda4d58c2
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 URL:		http://ekg2.org/
