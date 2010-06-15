@@ -19,8 +19,13 @@
 %bcond_with	sqlite			# build logsqlite plugin based on sqlite (conflicts with sqlite3)
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
+%bcond_with	svn			# checkout svn trunk instead of Source0 - requested by ekg2 developer
 
 %define		_snap 20100606
+%if %{with svn}
+%define		_snap svn.%(date +%Y%m%d)
+%endif
+
 %define		rel 3
 
 %if %{without jabber}
@@ -39,7 +44,9 @@ Release:	0.%{_snap}.%{rel}
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
+%if %{without svn}
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
+%endif
 # Source0-md5:	0d8348be0559c478835a767dda4d58c2
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -69,6 +76,7 @@ BuildRequires:	pkgconfig
 %{?with_readline:BuildRequires:	readline-devel}
 %{?with_python:BuildRequires:	rpm-pythonprov}
 BuildRequires:	sed >= 4.0
+%{?with_svn:BuildRequires:	subversion}
 %{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_xosd:BuildRequires:	xosd-devel}
@@ -328,7 +336,15 @@ xosd plugin for ekg2.
 Wtyczka xosd dla ekg2.
 
 %prep
+%if %{without svn}
 %setup -q -n %{name}-%{_snap}
+%else
+%setup -q -T -c
+svn co http://toxygen.net/svn/ekg2/trunk/
+mv trunk/* .
+rm -rf trunk
+%endif
+
 %patch0 -p1
 %patch1 -p1
 
