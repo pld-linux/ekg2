@@ -21,9 +21,10 @@
 %bcond_without	xosd			# don't build xosd plugin
 %bcond_with	svn			# checkout svn trunk instead of Source0 - requested by ekg2 developer
 
-%define		_snap 20100606
 %if %{with svn}
 %define		_snap svn.%(date +%Y%m%d)
+%else
+%define		_snap 20100606
 %endif
 
 %define		rel 3
