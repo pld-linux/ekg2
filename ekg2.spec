@@ -349,7 +349,7 @@ cd -
 %patch0 -p1
 %patch1 -p1
 
-sed -i -e '\#/opt/sqlite/lib#s#"$# /usr/lib64"#' m4/sqlite.m4
+sed -i -e '\#/opt/sqlite/lib#s#"$# %{_libdir}"#' m4/sqlite.m4
 
 %build
 %{__gettextize}
