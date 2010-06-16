@@ -340,10 +340,10 @@ Wtyczka xosd dla ekg2.
 %if %{without svn}
 %setup -q -n %{name}-%{_snap}
 %else
-%setup -q -T -c
-svn co http://toxygen.net/svn/ekg2/trunk/
-mv trunk/* .
-rm -rf trunk
+%setup -qcT
+cd ..
+svn -q co http://toxygen.net/svn/ekg2/trunk %{name}-%{version}
+cd -
 %endif
 
 %patch0 -p1
