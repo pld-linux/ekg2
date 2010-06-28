@@ -351,6 +351,9 @@ cd -
 
 sed -i -e '\#/opt/sqlite/lib#s#"$# %{_libdir}"#' m4/sqlite.m4
 
+touch po/Makefile.in.in
+find -name *.c > po/POTFILES.in
+
 %build
 %{__gettextize}
 %{__libtoolize}
