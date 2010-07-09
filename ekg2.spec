@@ -27,7 +27,7 @@
 %define		_snap 20100606
 %endif
 
-%define		rel 3
+%define		rel 4
 
 %if %{without jabber}
 %undefine with_gnutls
