@@ -24,10 +24,10 @@
 %if %{with svn}
 %define		_snap svn.%(date +%Y%m%d)
 %else
-%define		_snap 20100606
+%define		_snap 20100816
 %endif
 
-%define		rel 4
+%define		rel 1
 
 %if %{without jabber}
 %undefine with_gnutls
@@ -47,8 +47,8 @@ License:	GPL v2+
 Group:		Applications/Communications
 %if %{without svn}
 Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	1e494941aa4d8c6dddec64cbf632cd19
 %endif
-# Source0-md5:	0d8348be0559c478835a767dda4d58c2
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 URL:		http://ekg2.org/
