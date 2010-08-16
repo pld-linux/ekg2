@@ -339,6 +339,7 @@ Wtyczka xosd dla ekg2.
 %prep
 %if %{without svn}
 %setup -q -n %{name}-%{_snap}
+find -type d -name .svn | xargs rm -rf .svn
 %else
 %setup -qcT
 cd ..
