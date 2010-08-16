@@ -343,7 +343,7 @@ find -type d -name .svn | xargs rm -rf .svn
 %else
 %setup -qcT
 cd ..
-svn -q co http://toxygen.net/svn/ekg2/trunk %{name}-%{version}
+svn -q export http://toxygen.net/svn/ekg2/trunk %{name}-%{version}
 cd -
 %endif
 
