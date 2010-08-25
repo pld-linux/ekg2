@@ -22,9 +22,9 @@
 %bcond_with	svn			# checkout svn trunk instead of Source0 - requested by ekg2 developer
 
 %if %{with svn}
-%define		_snap svn.%(date +%Y%m%d)
+%define		subver svn.%(date +%Y%m%d)
 %else
-%define		_snap 20100816
+%define		subver 20100825
 %endif
 
 %define		rel 1
@@ -41,13 +41,13 @@ Summary:	Multi-protocol instant messaging and chat client
 Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	0.3
-Release:	0.%{_snap}.%{rel}
+Release:	0.%{subver}.%{rel}
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without svn}
-Source0:	http://pl.ekg2.org/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	1e494941aa4d8c6dddec64cbf632cd19
+Source0:	http://pl.ekg2.org/%{name}-%{subver}.tar.bz2
+# Source0-md5:	4aff4fd7a56fe86c92604cd393db37d2
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -77,9 +77,9 @@ BuildRequires:	pkgconfig
 %{?with_readline:BuildRequires:	readline-devel}
 %{?with_python:BuildRequires:	rpm-pythonprov}
 BuildRequires:	sed >= 4.0
-%{?with_svn:BuildRequires:	subversion}
 %{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
+%{?with_svn:BuildRequires:	subversion}
 %{?with_xosd:BuildRequires:	xosd-devel}
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -338,8 +338,7 @@ Wtyczka xosd dla ekg2.
 
 %prep
 %if %{without svn}
-%setup -q -n %{name}-%{_snap}
-find -type d -name .svn | xargs rm -rf .svn
+%setup -q -n %{name}-%{subver}
 %else
 %setup -qcT
 cd ..
