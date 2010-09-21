@@ -342,7 +342,7 @@ Wtyczka xosd dla ekg2.
 %else
 %setup -qcT
 cd ..
-svn -q export http://toxygen.net/svn/ekg2/trunk %{name}-%{version}
+svn -q export --force http://toxygen.net/svn/ekg2/trunk %{name}-%{version}
 cd -
 %endif
 
