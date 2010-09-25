@@ -29,10 +29,6 @@
 
 %define		rel 1
 
-%if %{without jabber}
-%undefine with_gnutls
-%endif
-
 %if %{with sqlite}
 %undefine sqlite3
 %endif
