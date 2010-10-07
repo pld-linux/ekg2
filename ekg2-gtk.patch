@@ -1,13 +1,3 @@
---- ekg2-20090120.orig/plugins/gtk/gtkutil.c	2009-01-20 22:31:03.000000000 +0100
-+++ ekg2-20090120/plugins/gtk/gtkutil.c	2009-02-24 23:58:04.000000000 +0100
-@@ -26,7 +26,6 @@
- #include <fcntl.h>
- 
- #include <gtk/gtkbutton.h>
--#include <gtk/gtkclist.h>
- #include <gtk/gtkscrolledwindow.h>
- #include <gtk/gtkmessagedialog.h>
- #include <gtk/gtkwindow.h>
 --- ekg2-20101007/plugins/gtk/maingui.c~	2010-10-07 09:50:40.796014732 +0200
 +++ ekg2-20101007/plugins/gtk/maingui.c	2010-10-07 09:56:43.665632423 +0200
 @@ -44,6 +44,7 @@
