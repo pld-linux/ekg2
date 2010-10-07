@@ -15,7 +15,7 @@
  	gui->nick_label = but =	gtk_button_new_with_label(gtk_session_target(sess->session));
  	gtk_button_set_relief(GTK_BUTTON(but), GTK_RELIEF_NONE);
 +#if GTK_CHECK_VERSION(2,18,0)
-+	gtk_wdiget_set_can_focus(but, false);
++	gtk_widget_set_can_focus(but, false);
 +#else
  	GTK_WIDGET_UNSET_FLAGS(but, GTK_CAN_FOCUS);
 +#endif
