@@ -8,3 +8,41 @@
  #include <gtk/gtkscrolledwindow.h>
  #include <gtk/gtkmessagedialog.h>
  #include <gtk/gtkwindow.h>
+--- ekg2-20101007/plugins/gtk/maingui.c~	2010-10-07 09:50:40.796014732 +0200
++++ ekg2-20101007/plugins/gtk/maingui.c	2010-10-07 09:56:43.665632423 +0200
+@@ -44,6 +44,7 @@
+ #include <stdio.h>
+ #include <ctype.h>
+ 
++#include <gtk/gtk.h>
+ #include <gtk/gtkarrow.h>
+ #include <gtk/gtktogglebutton.h>
+ #include <gtk/gtkhbox.h>
+--- ekg2-20101007/plugins/gtk/maingui.c~	2010-10-07 04:14:05.000000000 +0200
++++ ekg2-20101007/plugins/gtk/maingui.c	2010-10-07 09:28:58.093047709 +0200
+@@ -1800,7 +1800,11 @@
+ #endif
+ 	gui->nick_label = but =	gtk_button_new_with_label(gtk_session_target(sess->session));
+ 	gtk_button_set_relief(GTK_BUTTON(but), GTK_RELIEF_NONE);
++#if GTK_CHECK_VERSION(2,18,0)
++	gtk_wdiget_set_can_focus(but, false);
++#else
+ 	GTK_WIDGET_UNSET_FLAGS(but, GTK_CAN_FOCUS);
++#endif
+ 	gtk_box_pack_end(GTK_BOX(gui->nick_box), but, 0, 0, 0);
+ 	g_signal_connect(G_OBJECT(but), "clicked", G_CALLBACK(mg_sessionclick_cb), NULL);
+ 
+--- ekg2-20101007/plugins/gtk/menu.c~	2010-10-07 04:14:05.000000000 +0200
++++ ekg2-20101007/plugins/gtk/menu.c	2010-10-07 09:39:06.252667947 +0200
+@@ -167,7 +167,11 @@
+ 	gtk_container_add(GTK_CONTAINER(vbox), hbox);
+ 
+ 	wid = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
++#if GTK_CHECK_VERSION(2,18,0)
++	gtk_widget_set_can_default(GTK_WIDGET(wid), true);
++#else
+ 	GTK_WIDGET_SET_FLAGS(GTK_WIDGET(wid), GTK_CAN_DEFAULT);
++#endif
+ 	gtk_dialog_add_action_widget(GTK_DIALOG(about), wid, GTK_RESPONSE_OK);
+ 	gtk_widget_grab_default(wid);
+ 
