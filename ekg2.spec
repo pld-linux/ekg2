@@ -9,7 +9,7 @@
 %bcond_without	feed			# don't build feed plugin
 %bcond_without	gadugadu		# don't build gg plugin
 %bcond_without	gpg			# don't build gpg plugin
-%bcond_without	gtk			# don't build gtk plugin
+%bcond_with	gtk			# don't build gtk plugin
 %bcond_without	jabber			# don't build jabber plugin
 %bcond_without	gnutls			# build jabber plugin without libgnutls
 %bcond_without	libgsm			# don't build libgsm plugin
