@@ -338,8 +338,16 @@ Wtyczka xosd dla ekg2.
 %else
 %setup -qcT
 cd ..
-svn -q export --force http://toxygen.net/svn/ekg2/trunk %{name}-%{version}
+repo="http://toxygen.net/svn/ekg2/trunk"
+svn -q export --force $repo %{name}-%{version}
 cd -
+v=$(LANG=C svn info $repo/INSTALL 2>/dev/null|sed -n 's/^Revision: \([0-9]\+\)$/\1/p')
+if [ "$v" ]; then
+    echo SVN-rev.$v
+    v="SVN rev.$v"
+    sed -i "s/AM_INIT_AUTOMAKE(ekg2, CVS)/AM_INIT_AUTOMAKE(ekg2, \"$v\")/" configure.ac
+fi
+
 %endif
 
 %patch0 -p1
