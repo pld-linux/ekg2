@@ -24,7 +24,7 @@
 %if %{with svn}
 %define		subver svn.%(date +%Y%m%d)
 %else
-%define		subver 20101110
+%define		subver 20101115
 %endif
 
 %define		rel 1
@@ -43,7 +43,7 @@ License:	GPL v2+
 Group:		Applications/Communications
 %if %{without svn}
 Source0:	http://pl.ekg2.org/%{name}-%{subver}.tar.bz2
-# Source0-md5:	908ae66c4ab677671423316ed8eb7793
+# Source0-md5:	9cc649a5de57fc58f197e987ee3c697a
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
