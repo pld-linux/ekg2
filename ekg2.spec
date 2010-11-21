@@ -353,7 +353,7 @@ fi
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%patch2 -p0
 
 sed -i -e '\#/opt/sqlite/lib#s#"$# %{_libdir}"#' m4/sqlite.m4
 
