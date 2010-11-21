@@ -1,0 +1,151 @@
+diff --git plugins/python/python-window.c plugins/python/python-window.c
+index e0ac50f..3fee09a 100644
+--- plugins/python/python-window.c
++++ plugins/python/python-window.c
+@@ -52,6 +52,48 @@
+ // *
+ // * ***************************************************************************
+ 
++PyTypeObject ekg_window_type = {
++	PyObject_HEAD_INIT(NULL)
++	0,
++	"window",
++	sizeof(ekg_windowObj),
++	0,
++	(destructor)ekg_window_dealloc,
++	0,
++	(getattrfunc)ekg_window_get_attr,
++	0,
++	0,
++	(reprfunc)ekg_window_repr,
++	0,
++	0,
++	0,
++	0,							/*tp_hash */
++	0,							/*tp_call*/
++	(reprfunc)ekg_window_str,				/*tp_str*/
++	0,							/*tp_getattro*/
++	0,							/*tp_setattro*/
++	0,							/*tp_as_buffer*/
++	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /*tp_flags*/
++	"Window object",			/* tp_doc */
++	0,							/* tp_traverse */
++	0,							/* tp_clear */
++	0,							/* tp_richcompare */
++	0,							/* tp_weaklistoffset */
++	0,							/* tp_iter */
++	0,							/* tp_iternext */
++	ekg_window_methods,		/* tp_methods */
++	0,							/* tp_members */
++	0,							/* tp_getset */
++	0,							/* tp_base */
++	0,							/* tp_dict */
++	0,							/* tp_descr_get */
++	0,							/* tp_descr_set */
++	0,							/* tp_dictoffset */
++	(initproc)ekg_window_init,	/* tp_init */
++	0,							/* tp_alloc */
++	0,							/* tp_new */
++};
++
+ /**
+  * ekg_window_init()
+  *
+diff --git plugins/python/python-window.h plugins/python/python-window.h
+index 8361164..dce92ff 100644
+--- plugins/python/python-window.h
++++ plugins/python/python-window.h
+@@ -52,48 +52,7 @@ staticforward PyMethodDef ekg_window_methods[] = {
+ 	{NULL, NULL, 0, NULL}
+ };
+ 
+-static PyTypeObject ekg_window_type = {
+-	PyObject_HEAD_INIT(NULL)
+-	0,
+-	"window",
+-	sizeof(ekg_windowObj),
+-	0,
+-	(destructor)ekg_window_dealloc,
+-	0,
+-	(getattrfunc)ekg_window_get_attr,
+-	0,
+-	0,
+-	(reprfunc)ekg_window_repr,
+-	0,
+-	0,
+-	0,
+-	0,							/*tp_hash */
+-	0,							/*tp_call*/
+-	(reprfunc)ekg_window_str,				/*tp_str*/
+-	0,							/*tp_getattro*/
+-	0,							/*tp_setattro*/
+-	0,							/*tp_as_buffer*/
+-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /*tp_flags*/
+-	"Window object",			/* tp_doc */
+-	0,							/* tp_traverse */
+-	0,							/* tp_clear */
+-	0,							/* tp_richcompare */
+-	0,							/* tp_weaklistoffset */
+-	0,							/* tp_iter */
+-	0,							/* tp_iternext */
+-	ekg_window_methods,		/* tp_methods */
+-	0,							/* tp_members */
+-	0,							/* tp_getset */
+-	0,							/* tp_base */
+-	0,							/* tp_dict */
+-	0,							/* tp_descr_get */
+-	0,							/* tp_descr_set */
+-	0,							/* tp_dictoffset */
+-	(initproc)ekg_window_init,	/* tp_init */
+-	0,							/* tp_alloc */
+-	0,							/* tp_new */
+-};
+-
++extern PyTypeObject ekg_window_type;
+ 
+ #endif
+ 
+diff --git plugins/python/python.c plugins/python/python.c
+index 272ad4f..207a8d3 100644
+--- plugins/python/python.c
++++ plugins/python/python.c
+@@ -23,6 +23,7 @@
+ #include "python.h"
+ #include "python-ekg.h"
+ #include "python-config.h"
++#include "python-window.h"
+ 
+ #include <sys/types.h>
+ 
+@@ -531,6 +532,22 @@ without that works ? wtf ?!
+ // *
+ // ********************************************************************************
+ 
++
++/* XXX check http://docs.python.org/extending/newtypes.html */
++static void python_init_type(PyTypeObject *type) 
++{
++    type->tp_new = PyType_GenericNew;
++    if (PyType_Ready(type) < 0)
++        return;
++/*
++    PyObject* m = Py_InitModule3("noddy", noddy_methods,
++                       "Example module that creates an extension type.");
++
++    Py_INCREF(&noddy_NoddyType);
++    PyModule_AddObject(m, "Noddy", (PyObject *)&noddy_NoddyType);
++*/
++}
++
+ /**
+  * python_initialize()
+  *
+@@ -550,6 +567,8 @@ int python_initialize()
+ 	ekg_config = PyObject_NEW(PyObject, &ekg_config_type);
+ 	PyModule_AddObject(ekg, "config", ekg_config);
+ 
++	python_init_type(&ekg_window_type);
++
+ 	// Const - general
+ 	PyModule_AddStringConstant(ekg, "VERSION", VERSION);
+ 
