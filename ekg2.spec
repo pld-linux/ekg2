@@ -27,7 +27,7 @@
 %define		subver 20101115
 %endif
 
-%define		rel 1
+%define		rel 2
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -47,6 +47,7 @@ Source0:	http://pl.ekg2.org/%{name}-%{subver}.tar.bz2
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
+Patch2:		%{name}-bug-63.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -352,6 +353,7 @@ fi
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 sed -i -e '\#/opt/sqlite/lib#s#"$# %{_libdir}"#' m4/sqlite.m4
 
