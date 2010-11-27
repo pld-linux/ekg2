@@ -19,10 +19,10 @@
 %bcond_with	sqlite			# build logsqlite plugin based on sqlite (conflicts with sqlite3)
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_without	xosd			# don't build xosd plugin
-%bcond_with	svn			# checkout svn trunk instead of Source0 - requested by ekg2 developer
+%bcond_with	git			# checkout svn trunk instead of Source0 - requested by ekg2 developer
 
-%if %{with svn}
-%define		subver svn.%(date +%Y%m%d)
+%if %{with git}
+%define		subver git.%(date +%Y%m%d)
 %else
 %define		subver 20101115
 %endif
@@ -41,7 +41,7 @@ Release:	0.%{subver}.%{rel}
 Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
-%if %{without svn}
+%if %{without git}
 Source0:	http://pl.ekg2.org/%{name}-%{subver}.tar.bz2
 # Source0-md5:	9cc649a5de57fc58f197e987ee3c697a
 %endif
@@ -76,7 +76,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 %{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
-%{?with_svn:BuildRequires:	subversion}
+%{?with_git:BuildRequires:	git-core}
 %{?with_xosd:BuildRequires:	xosd-devel}
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -334,21 +334,17 @@ xosd plugin for ekg2.
 Wtyczka xosd dla ekg2.
 
 %prep
-%if %{without svn}
-%setup -q -n %{name}-%{subver}
-%else
-%setup -qcT
-cd ..
-repo="http://toxygen.net/svn/ekg2/trunk"
-svn -q export --force $repo %{name}-%{version}
-cd -
-v=$(LANG=C svn info $repo/INSTALL 2>/dev/null|sed -n 's/^Revision: \([0-9]\+\)$/\1/p')
-if [ "$v" ]; then
-    echo SVN-rev.$v
-    v="SVN rev.$v"
-    sed -i "s/AM_INIT_AUTOMAKE(ekg2, CVS)/AM_INIT_AUTOMAKE(ekg2, \"$v\")/" configure.ac
+%if %{with git}
+%setup -q -T -c -n %{name}-%{subver}
+repo="%ekg2repo"
+if [ "$repo" = "%%ekg2repo" ]; then
+repo="git://github.com/leafnode/ekg2.git"
 fi
-
+git init
+git fetch $repo master
+git checkout FETCH_HEAD
+%else
+%setup -q -n %{name}-%{subver}
 %endif
 
 %patch0 -p1
