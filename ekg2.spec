@@ -24,10 +24,10 @@
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20101115
+%define		subver 20101127
 %endif
 
-%define		rel 2
+%define		rel 1
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -42,8 +42,8 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
-Source0:	http://pl.ekg2.org/%{name}-%{subver}.tar.bz2
-# Source0-md5:	9cc649a5de57fc58f197e987ee3c697a
+Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
+# Source0-md5:	baec7f1165c9f98745ff544e66e98f3d
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -57,6 +57,7 @@ BuildRequires:	expat-devel
 %endif
 BuildRequires:	gettext-devel >= 0.17-8
 %{?with_gadugadu:BuildRequires:	giflib-devel}
+%{?with_git:BuildRequires:	git-core}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 %{?with_gpg:BuildRequires:	gpgme-devel}
 BuildRequires:	gpm-devel
@@ -76,7 +77,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 %{?with_sqlite:BuildRequires:	sqlite-devel}
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
-%{?with_git:BuildRequires:	git-core}
 %{?with_xosd:BuildRequires:	xosd-devel}
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -344,7 +344,8 @@ git init
 git fetch $repo master
 git checkout FETCH_HEAD
 %else
-%setup -q -n %{name}-%{subver}
+%setup -q -c -n %{name}-%{subver}
+mv leafnode-ekg2-*/* .
 %endif
 
 %patch0 -p1
@@ -395,8 +396,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/scripts
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f README README-main || true
-
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/*.la
 
 %find_lang %{name}
@@ -406,7 +405,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc NEWS* README-main docs/ekg2book* docs/README docs/TODO docs/*.txt
+%doc NEWS* README.md docs/ekg2book* docs/README docs/TODO docs/*.txt
 %attr(755,root,root) %{_bindir}/ekg2
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
@@ -442,6 +441,8 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-gpg
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gpg.so
+%{_datadir}/ekg2/plugins/gpg/commands-en.txt
+%{_datadir}/ekg2/plugins/gpg/commands-pl.txt
 %endif
 
 %if %{with gtk}
@@ -536,6 +537,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
 %{_datadir}/%{name}/scripts/*.py
+%{_datadir}/ekg2/plugins/python/commands-en.txt
+%{_datadir}/ekg2/plugins/python/commands-pl.txt
 %endif
 
 %files plugin-sim
