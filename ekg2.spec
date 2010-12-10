@@ -9,7 +9,7 @@
 %bcond_without	feed			# don't build feed plugin
 %bcond_without	gadugadu		# don't build gg plugin
 %bcond_without	gpg			# don't build gpg plugin
-%bcond_with	gtk			# don't build gtk plugin
+%bcond_without	gtk			# don't build gtk plugin
 %bcond_without	jabber			# don't build jabber plugin
 %bcond_without	gnutls			# build jabber plugin without libgnutls
 %bcond_without	libgsm			# don't build libgsm plugin
@@ -24,7 +24,7 @@
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20101127
+%define		subver 20101210
 %endif
 
 %define		rel 1
@@ -38,12 +38,12 @@ Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	0.4
 Release:	0.%{subver}.%{rel}
-Epoch:		2
+Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
 Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
-# Source0-md5:	baec7f1165c9f98745ff544e66e98f3d
+# Source0-md5:	240c7203a2b8c15557710dcbc8fbf8c6
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
