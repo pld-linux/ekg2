@@ -27,7 +27,7 @@
 %define		subver 20101210
 %endif
 
-%define		rel 1
+%define		rel 2
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -537,6 +537,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
 %{_datadir}/%{name}/scripts/*.py
+%dir %{_datadir}/ekg2/plugins/python
 %{_datadir}/ekg2/plugins/python/commands-en.txt
 %{_datadir}/ekg2/plugins/python/commands-pl.txt
 %endif
