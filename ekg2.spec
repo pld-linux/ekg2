@@ -27,7 +27,7 @@
 %define		subver 20101210
 %endif
 
-%define		rel 3
+%define		rel 4
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -38,7 +38,7 @@ Summary(pl.UTF-8):	Wieloprotokołowy komunikator internetowy
 Name:		ekg2
 Version:	0.4
 Release:	0.%{subver}.%{rel}
-Epoch:		1
+Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
