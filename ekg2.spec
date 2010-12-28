@@ -338,11 +338,15 @@ Wtyczka xosd dla ekg2.
 %if %{with git}
 %setup -q -T -c -n %{name}-%{subver}
 repo="%ekg2repo"
+branch="%ekg2branch"
 if [ "$repo" = "%%ekg2repo" ]; then
 repo="git://github.com/leafnode/ekg2.git"
 fi
+if [ "$branch" = "%%ekg2branch" ]; then
+repo="master"
+fi
 git init
-git fetch $repo master
+git fetch $repo $branch
 git checkout FETCH_HEAD
 %else
 %setup -q -c -n %{name}-%{subver}
