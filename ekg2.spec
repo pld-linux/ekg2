@@ -27,7 +27,7 @@
 %define		subver 20101210
 %endif
 
-%define		rel 2
+%define		rel 3
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -302,6 +302,7 @@ Summary:	Python scripting plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka języka Python dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	python-modules
 
 %description plugin-scripting-python
 Python scripting plugin for ekg2.
