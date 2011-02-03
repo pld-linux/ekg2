@@ -343,7 +343,7 @@ if [ "$repo" = "%%ekg2repo" ]; then
 repo="git://github.com/leafnode/ekg2.git"
 fi
 if [ "$branch" = "%%ekg2branch" ]; then
-repo="master"
+branch="master"
 fi
 git init
 git fetch $repo $branch
