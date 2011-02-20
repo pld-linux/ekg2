@@ -27,7 +27,7 @@
 %define		subver 20101210
 %endif
 
-%define		rel 4
+%define		rel 5
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -446,6 +446,7 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-gpg
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gpg.so
+%dir %{_datadir}/ekg2/plugins/gpg
 %{_datadir}/ekg2/plugins/gpg/commands-en.txt
 %{_datadir}/ekg2/plugins/gpg/commands-pl.txt
 %endif
