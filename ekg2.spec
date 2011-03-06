@@ -6,28 +6,28 @@
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
-%bcond_without	feed			# don't build feed plugin
+%bcond_without	rss				# don't build rss plugin
 %bcond_without	gadugadu		# don't build gg plugin
 %bcond_without	gpg			# don't build gpg plugin
 %bcond_without	gtk			# don't build gtk plugin
 %bcond_without	jabber			# don't build jabber plugin
 %bcond_without	gnutls			# build jabber plugin without libgnutls
-%bcond_without	libgsm			# don't build libgsm plugin
+%bcond_with	libgsm			# don't build libgsm plugin
 %bcond_without	perl			# don't build Perl plugin
 %bcond_without	python			# don't build Python plugin
 %bcond_without	readline		# don't build readline interface
 %bcond_with	sqlite			# build logsqlite plugin based on sqlite (conflicts with sqlite3)
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
-%bcond_without	xosd			# don't build xosd plugin
-%bcond_with	git			# checkout svn trunk instead of Source0 - requested by ekg2 developer
+%bcond_with	xosd			# don't build xosd plugin
+%bcond_with	git			# checkout git master instead of Source0 - requested by ekg2 developer
 
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20101210
+%define		subver 20110305
 %endif
 
-%define		rel 5
+%define		rel 1
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -43,7 +43,7 @@ License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
 Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
-# Source0-md5:	240c7203a2b8c15557710dcbc8fbf8c6
+# Source0-md5:	31031944a74fd569fbf275111c62a9bc
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -52,7 +52,7 @@ URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
-%if %{with feed} || %{with jabber}
+%if %{with rss} || %{with jabber}
 BuildRequires:	expat-devel
 %endif
 BuildRequires:	gettext-devel >= 0.17-8
@@ -60,7 +60,6 @@ BuildRequires:	gettext-devel >= 0.17-8
 %{?with_git:BuildRequires:	git-core}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
 %{?with_gpg:BuildRequires:	gpgme-devel}
-BuildRequires:	gpm-devel
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.14.1}
 %{?with_gadugadu:BuildRequires:	libgadu-devel}
 %{?with_libgsm:BuildRequires:	libgsm-devel}
@@ -99,17 +98,18 @@ Header files for ekg2.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe ekg2.
 
-%package plugin-feed
-Summary:	feed plugin for ekg2
-Summary(pl.UTF-8):	Wtyczka feed dla ekg2
+%package plugin-rss
+Summary:	rss plugin for ekg2
+Summary(pl.UTF-8):	Wtyczka rss dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Obsoletes:	ekg2-plugin-feed
 
-%description plugin-feed
-feed plugin for ekg2.
+%description plugin-rss
+rss plugin for ekg2.
 
-%description plugin-feed -l pl.UTF-8
-Wtyczka feed dla ekg2.
+%description plugin-rss -l pl.UTF-8
+Wtyczka rss dla ekg2.
 
 %package plugin-gpg
 Summary:	gpg plugin for ekg2
@@ -135,18 +135,6 @@ gtk plugin for ekg2.
 
 %description plugin-gtk -l pl.UTF-8
 Wtyczka gtk dla ekg2.
-
-%package plugin-ioctld
-Summary:	Ioctld plugin for ekg2
-Summary(pl.UTF-8):	Wtyczka ioctld dla ekg2
-Group:		Applications/Communications
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description plugin-ioctld
-Ioctld plugin for ekg2 (contains suid root binary!).
-
-%description plugin-ioctld -l pl.UTF-8
-Wtyczka ioctld dla ekg2 (zawiera program z ustawionym suid root!).
 
 %package plugin-jogger
 Summary:	Jogger plugin for ekg2
@@ -357,7 +345,6 @@ mv leafnode-ekg2-*/* .
 %patch1 -p1
 %patch2 -p0
 
-sed -i -e '\#/opt/sqlite/lib#s#"$# %{_libdir}"#' m4/sqlite.m4
 
 touch po/Makefile.in.in
 find -name *.c > po/POTFILES.in
@@ -379,7 +366,7 @@ CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 	%{!?with_gpg:--without-gpg} \
 	--with%{!?with_gtk:out}-gtk \
 	--with%{!?with_gnutls:out}-libgnutls \
-%if %{with feed} || %{with jabber}
+%if %{with rss} || %{with jabber}
 		--with-expat \
 %else
 		--without-expat \
@@ -390,7 +377,8 @@ CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
 	--with%{!?with_readline:out}-readline \
 	--with%{!?with_sqlite:out}-sqlite \
 	--with%{!?with_sqlite3:out}-sqlite3 \
-	--with%{!?with_xosd:out}-xosd
+	--with%{!?with_xosd:out}-xosd \
+	--disable-nntp
 
 %{__make}
 
@@ -400,8 +388,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/scripts
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/*.la
 
 %find_lang %{name}
 
@@ -415,37 +401,36 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
 %attr(755,root,root) %{_libdir}/%{name}/plugins/autoresponder.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/autoresponder.la
 %{_datadir}/%{name}/plugins/autoresponder
-%attr(755,root,root) %{_libdir}/%{name}/plugins/httprc_xajax.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logs.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/logs.la
 %attr(755,root,root) %{_libdir}/%{name}/plugins/mail.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/mail.la
 %{_datadir}/%{name}/plugins/mail
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ncurses.so
-%attr(755,root,root) %{_libdir}/%{name}/plugins/pcm.so
-%attr(755,root,root) %{_libdir}/%{name}/plugins/rc.so
-%attr(755,root,root) %{_libdir}/%{name}/plugins/rot13.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/ncurses.la
 %attr(755,root,root) %{_libdir}/%{name}/plugins/sms.so
-%attr(755,root,root) %{_libdir}/%{name}/plugins/xmsg.so
-%{_datadir}/%{name}/plugins/xmsg
+%attr(755,root,root) %{_libdir}/%{name}/plugins/sms.la
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/*.txt
-%{_datadir}/%{name}/plugins/httprc_xajax
 %{_datadir}/%{name}/plugins/logs
 %{_datadir}/%{name}/plugins/ncurses
-%{_datadir}/%{name}/plugins/rc
 %{_datadir}/%{name}/plugins/sms
 %dir %{_datadir}/%{name}/scripts
 %{_datadir}/%{name}/themes
 
-%files plugin-feed
+%files plugin-rss
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/plugins/feed.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rss.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rss.la
 
 %if %{with gpg}
 %files plugin-gpg
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gpg.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/gpg.la
 %dir %{_datadir}/ekg2/plugins/gpg
 %{_datadir}/ekg2/plugins/gpg/commands-en.txt
 %{_datadir}/ekg2/plugins/gpg/commands-pl.txt
@@ -455,77 +440,77 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-gtk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gtk.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/gtk.la
 %endif
-
-%files plugin-ioctld
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/plugins/ioctld.so
-%{_datadir}/%{name}/plugins/ioctld
-%attr(4755,root,root) %{_libexecdir}/ioctld
 
 %files plugin-jogger
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/jogger.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/jogger.la
 
 %if %{with sqlite} || %{with sqlite3}
 %files plugin-logsqlite
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/logsqlite.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/logsqlite.la
 %{_datadir}/%{name}/plugins/logsqlite
 %endif
 
 %files plugin-protocol-gg
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gg.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/gg.la
 %{_datadir}/%{name}/plugins/gg
 
 %if %{with libgsm}
 %files plugin-protocol-gsm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/gsm.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/gsm.la
 %endif
 
 %files plugin-protocol-icq
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/icq.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/icq.la
 
 %files plugin-protocol-irc
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/irc.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/irc.la
 %{_datadir}/%{name}/plugins/irc
 
 %if %{with jabber}
 %files plugin-protocol-jabber
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/jabber.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/jabber.la
 %{_datadir}/%{name}/plugins/jabber
 %endif
 
 %files plugin-protocol-polchat
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/polchat.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/polchat.la
 
 %files plugin-protocol-rivchat
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/rivchat.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rivchat.la
 
 %if %{with readline}
 %files plugin-readline
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/readline.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/readline.la
 %{_datadir}/%{name}/plugins/readline
-%endif
-
-%if %{with readline}
-%files plugin-remote
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/plugins/remote.so
 %endif
 
 %if %{with perl}
 %files plugin-scripting-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/perl.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/perl.la
 %{perl_vendorarch}/Ekg2.pm
 %dir %{perl_vendorarch}/Ekg2
 %{perl_vendorarch}/Ekg2/Irc.pm
@@ -542,6 +527,7 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-scripting-python
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/python.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/python.la
 %{_datadir}/%{name}/scripts/*.py
 %dir %{_datadir}/ekg2/plugins/python
 %{_datadir}/ekg2/plugins/python/commands-en.txt
@@ -551,11 +537,13 @@ rm -rf $RPM_BUILD_ROOT
 %files plugin-sim
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/sim.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/sim.la
 %{_datadir}/%{name}/plugins/sim
 
 %if %{with xosd}
 %files plugin-xosd
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/plugins/xosd.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/xosd.la
 %{_datadir}/%{name}/plugins/xosd
 %endif
