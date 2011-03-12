@@ -24,7 +24,7 @@
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20110305
+%define		subver 20110312
 %endif
 
 %define		rel 1
@@ -43,7 +43,7 @@ License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
 Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
-# Source0-md5:	31031944a74fd569fbf275111c62a9bc
+# Source0-md5:	a6abd350258279f5c692a27746e60a28
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
