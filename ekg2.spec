@@ -24,7 +24,7 @@
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20110312
+%define		subver 20110603
 %endif
 
 %define		rel 1
@@ -43,7 +43,7 @@ License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
 Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
-# Source0-md5:	a6abd350258279f5c692a27746e60a28
+# Source0-md5:	41aaca96d09f754d33985e5b3f26b13e
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -396,7 +396,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc NEWS* README.md docs/ekg2book* docs/README docs/TODO docs/*.txt
+%doc README.md docs/ekg2book* docs/README docs/TODO docs/*.txt
 %attr(755,root,root) %{_bindir}/ekg2
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
