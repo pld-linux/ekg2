@@ -20,14 +20,15 @@
 %bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
 %bcond_with	xosd			# don't build xosd plugin
 %bcond_with	git			# checkout git master instead of Source0 - requested by ekg2 developer
+%bcond_with	irckeepalive		# adds patch that check irc connection and disconnect when server dies
 
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20110603
+%define		subver 20110703
 %endif
 
-%define		rel 1
+%define		rel 2
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -48,6 +49,7 @@ Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 Patch2:		%{name}-bug-63.patch
+Patch3:		%{name}-keepalive_irc.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -344,6 +346,10 @@ mv leafnode-ekg2-*/* .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
+
+%if %{with irckeepalive}
+%patch3 -p1
+%endif
 
 
 touch po/Makefile.in.in
