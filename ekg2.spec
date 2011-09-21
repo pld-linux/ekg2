@@ -44,7 +44,7 @@ License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
 Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
-# Source0-md5:	41aaca96d09f754d33985e5b3f26b13e
+# Source0-md5:	f451ea9f281d6b8c2578059a3863cee3
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -80,6 +80,7 @@ BuildRequires:	sed >= 4.0
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_xosd:BuildRequires:	xosd-devel}
 BuildRequires:	zlib-devel
+Obsoletes:	ekg2-plugin-remote
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
