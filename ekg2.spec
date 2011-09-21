@@ -263,18 +263,6 @@ readline interface.
 %description plugin-readline -l pl.UTF-8
 Interfejs readline.
 
-%package plugin-remote
-Summary:	Remote contol interface
-Summary(pl.UTF-8):	Zdalne sterowanie ekg2
-Group:		Applications/Communications
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description plugin-remote
-Remote control interface.
-
-%description plugin-remote -l pl.UTF-8
-Zdalne sterowanie ekg2.
-
 %package plugin-scripting-perl
 Summary:	Perl scripting plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka języka Perl dla ekg2
