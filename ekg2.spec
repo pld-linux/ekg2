@@ -80,6 +80,7 @@ BuildRequires:	sed >= 4.0
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_xosd:BuildRequires:	xosd-devel}
 BuildRequires:	zlib-devel
+Obsoletes:	ekg2-plugin-ioctld
 Obsoletes:	ekg2-plugin-remote
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
