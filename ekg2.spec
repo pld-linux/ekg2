@@ -28,7 +28,7 @@
 %define		subver 20110703
 %endif
 
-%define		rel 4
+%define		rel 5
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -43,7 +43,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
-Source0:	https://github.com/leafnode/ekg2/tarball/master#/%{name}-%{subver}.tar.bz2
+Source0:	https://github.com/leafnode/ekg2/tarball/master?/%{name}-%{subver}.tar.bz2
 # Source0-md5:	f451ea9f281d6b8c2578059a3863cee3
 %endif
 Patch0:		%{name}-perl-install.patch
