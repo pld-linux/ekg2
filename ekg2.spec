@@ -511,10 +511,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorarch}/Ekg2
 %{perl_vendorarch}/Ekg2/Irc.pm
 %dir %{perl_vendorarch}/auto/Ekg2
-%{perl_vendorarch}/auto/Ekg2/Ekg2.bs
 %attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Ekg2.so
 %dir %{perl_vendorarch}/auto/Ekg2/Irc
-%{perl_vendorarch}/auto/Ekg2/Irc/Irc.bs
 %attr(755,root,root) %{perl_vendorarch}/auto/Ekg2/Irc/Irc.so
 %{_datadir}/%{name}/scripts/*.pl
 %endif
