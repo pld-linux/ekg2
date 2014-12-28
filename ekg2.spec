@@ -57,7 +57,7 @@ BuildRequires:	automake
 %if %{with rss} || %{with jabber}
 BuildRequires:	expat-devel
 %endif
-BuildRequires:	gettext-devel >= 0.17-8
+BuildRequires:	gettext-tools >= 0.17-8
 %{?with_gadugadu:BuildRequires:	giflib-devel}
 %{?with_git:BuildRequires:	git-core}
 %{?with_gnutls:BuildRequires:	gnutls-devel >= 1.2.5}
