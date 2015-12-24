@@ -28,7 +28,7 @@
 %define		subver 20110703
 %endif
 
-%define		rel 7
+%define		rel 8
 
 %if %{with sqlite}
 %undefine sqlite3
