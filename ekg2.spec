@@ -1,8 +1,3 @@
-# TODO:
-# - warning: Installed (but unpackaged) file(s) found:
-#   /usr/lib/perl5/5.10.0/i686-pld-linux-thread-multi/perllocal.pod
-#   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/.packlist
-#   /usr/lib/perl5/vendor_perl/5.10.0/i686-pld-linux-thread-multi/auto/Ekg2/Irc/.packlist
 #
 # Conditional build:
 %bcond_without	aspell			# build without spell-checking support with aspell
@@ -25,10 +20,10 @@
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
 %else
-%define		subver 20110703
+%define		subver 20180902
 %endif
 
-%define		rel 13
+%define		rel 1
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -43,8 +38,8 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
-Source0:	https://github.com/leafnode/ekg2/tarball/master?/%{name}-%{subver}.tar.bz2
-# Source0-md5:	f451ea9f281d6b8c2578059a3863cee3
+Source0:	https://github.com/leafnode/ekg2/tarball/master?/%{name}-%{subver}.tar.gz
+# Source0-md5:	2ce452ebcecc03532dee956c5648d890
 %endif
 Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
@@ -330,7 +325,7 @@ git fetch $repo $branch
 git checkout FETCH_HEAD
 %else
 %setup -q -c -n %{name}-%{subver}
-mv leafnode-ekg2-*/* .
+%{__mv} ekg2-ekg2-*/* .
 %endif
 
 %patch0 -p1
@@ -406,6 +401,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/plugins/mail
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ncurses.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/ncurses.la
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rc.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/rc.la
 %attr(755,root,root) %{_libdir}/%{name}/plugins/sms.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/sms.la
 %dir %{_datadir}/%{name}
@@ -414,6 +411,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/plugins/logs
 %{_datadir}/%{name}/plugins/ncurses
 %{_datadir}/%{name}/plugins/sms
+%{_datadir}/%{name}/plugins/rc
 %dir %{_datadir}/%{name}/scripts
 %{_datadir}/%{name}/themes
 
