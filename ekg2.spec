@@ -23,7 +23,7 @@
 %define		subver 20180902
 %endif
 
-%define		rel 2
+%define		rel 3
 
 %if %{with sqlite}
 %undefine sqlite3
@@ -45,6 +45,7 @@ Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 Patch2:		%{name}-bug-63.patch
 Patch3:		%{name}-keepalive_irc.patch
+Patch4:		openssl.patch
 URL:		http://ekg2.org/
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
@@ -336,6 +337,7 @@ git checkout FETCH_HEAD
 %patch3 -p1
 %endif
 
+%patch4 -p1
 
 touch po/Makefile.in.in
 find -name *.c > po/POTFILES.in
