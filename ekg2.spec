@@ -342,6 +342,8 @@ git checkout FETCH_HEAD
 touch po/Makefile.in.in
 find -name *.c > po/POTFILES.in
 
+%{__rm} m4/gpgme.m4
+
 %build
 %{__gettextize}
 %{__libtoolize}
