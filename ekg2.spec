@@ -86,18 +86,6 @@ Multi-protocol instant messaging and chat client with many plugins.
 %description -l pl.UTF-8
 Wieloprotokołowy, otwarty komunikator internetowy z wieloma wtyczkami.
 
-%package devel
-Summary:	ekg2 header files
-Summary(pl.UTF-8):	Pliki nagłówkowe ekg2
-Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description devel
-Header files for ekg2.
-
-%description devel -l pl.UTF-8
-Pliki nagłówkowe ekg2.
-
 %package plugin-rss
 Summary:	rss plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka rss dla ekg2
