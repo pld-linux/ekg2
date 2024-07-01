@@ -354,6 +354,7 @@ find -name *.c > po/POTFILES.in
 
 # for hostent.h_addr (should be in CPPFLAGS, but it's overridden in plugins/jabber)
 CFLAGS="%{rpmcflags} -D_GNU_SOURCE"
+CPPFLAGS="%{rpmcppflags} -DNCURSES_INTERNALS"
 %configure \
 	--enable-unicode \
 	--with%{!?with_aspell:out}-aspell \
