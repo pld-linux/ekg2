@@ -317,15 +317,15 @@ git checkout FETCH_HEAD
 %{__mv} ekg2-ekg2-*/* .
 %endif
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p0
 
 %if %{with irckeepalive}
-%patch3 -p1
+%patch -P3 -p1
 %endif
 
-%patch4 -p1
+%patch -P4 -p1
 
 touch po/Makefile.in.in
 find -name *.c > po/POTFILES.in
