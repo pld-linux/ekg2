@@ -45,6 +45,7 @@ Patch0:		%{name}-perl-install.patch
 Patch1:		%{name}-gtk.patch
 Patch2:		%{name}-bug-63.patch
 Patch3:		%{name}-keepalive_irc.patch
+Patch4:		%{name}-types.patch
 URL:		https://github.com/ekg2/ekg2
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf >= 2.60
@@ -319,6 +320,7 @@ git checkout FETCH_HEAD
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p0
+%patch -P4 -p1
 
 %if %{with irckeepalive}
 %patch -P3 -p1

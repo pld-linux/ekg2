@@ -1,0 +1,84 @@
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-config.h.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-config.h	2025-07-23 18:59:35.627026117 +0200
+@@ -28,7 +28,7 @@ typedef struct
+ } ekg_configObj;
+ 
+ void ekg_config_dealloc(PyObject *o);
+-int ekg_config_len(ekg_configObj *self);
++Py_ssize_t ekg_config_len(ekg_configObj *self);
+ PyObject* ekg_config_get(ekg_configObj * self, PyObject * key);
+ PyObject* ekg_config_set(ekg_configObj * self, PyObject* key, PyObject* value);
+ 
+@@ -33,7 +33,7 @@ PyObject* ekg_config_get(ekg_configObj *
+ PyObject* ekg_config_set(ekg_configObj * self, PyObject* key, PyObject* value);
+ 
+ static PyMappingMethods _config_mapping = {
+-	(inquiry)	ekg_config_len,
++	(lenfunc)	ekg_config_len,
+ 	(binaryfunc)	ekg_config_get,
+ 	(objobjargproc) ekg_config_set
+ };
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-config.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-config.c	2025-07-23 18:59:37.070368366 +0200
+@@ -58,7 +58,7 @@ void ekg_config_dealloc(PyObject * o)
+  *
+  */
+ 
+-int ekg_config_len(ekg_configObj * self)
++Py_ssize_t ekg_config_len(ekg_configObj * self)
+ {
+ 	return g_slist_length(variables);
+ }
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/ekg/scripts.h.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/ekg/scripts.h	2025-07-23 21:24:15.117488153 +0200
+@@ -92,7 +92,7 @@ typedef int (script_handler_command_t)(s
+ typedef int (script_handler_timer_t)  (script_t *, script_timer_t *, int);
+ typedef int (script_handler_var_t)    (script_t *, script_var_t *,   char *);
+ typedef int (script_handler_query_t)  (script_t *, script_query_t *, void **);
+-typedef int (script_handler_watch_t)  (script_t *, script_watch_t *, int, int, int);
++typedef int (script_handler_watch_t)  (script_t *, script_watch_t *, int, int, long int);
+ 
+ typedef int (script_free_bind_t)      (script_t *, void *, int, void *, ...);
+ 
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-session.h.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-session.h	2025-07-23 21:42:17.580852010 +0200
+@@ -32,7 +32,7 @@ void ekg_session_dealloc(ekg_sessionObj
+ PyObject * ekg_session_repr(ekg_sessionObj * self);
+ PyObject * ekg_session_str(ekg_sessionObj * self);
+ int ekg_session_init(ekg_sessionObj *self, PyObject *args, PyObject *kwds);
+-int ekg_session_len(ekg_sessionObj * self);
++Py_ssize_t ekg_session_len(ekg_sessionObj * self);
+ PyObject *ekg_session_set(ekg_sessionObj * self, PyObject * key, PyObject * value);
+ PyObject *ekg_session_connected(ekg_sessionObj * self);
+ PyObject *ekg_session_get_attr(ekg_sessionObj * self, char * attr);
+@@ -56,7 +56,7 @@ staticforward PyMethodDef ekg_session_me
+ };
+ 
+ static PyMappingMethods ekg_session_mapping = {
+-    (inquiry) ekg_session_len,
++    (lenfunc) ekg_session_len,
+     (binaryfunc) ekg_session_get,
+     (objobjargproc) ekg_session_set
+ };
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-session.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python-session.c	2025-07-23 21:42:56.857761344 +0200
+@@ -93,7 +93,7 @@ void ekg_session_dealloc(ekg_sessionObj
+  *
+  */
+ 
+-int ekg_session_len(ekg_sessionObj * self)
++Py_ssize_t ekg_session_len(ekg_sessionObj * self)
+ {
+ 	session_t * s;
+ 	s = session_find(self->name);
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/rivchat/rivchat.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/rivchat/rivchat.c	2025-07-23 21:52:04.817802637 +0200
+@@ -1303,7 +1303,7 @@ static COMMAND(rivchat_command_places) {
+ 		item->uptime =	user ? user->ping_packet.online : 0;
+ 		item->master =	user ? user->ping_packet.master : 0;
+ 
+-		list_add_sorted(&final, item, rivchat_places_sort);
++		LIST_ADD_SORTED(&final, item, rivchat_places_sort);
+ 	}
+ 
+ 	for (i = 1, l = final; l; l = l->next, i++) {
