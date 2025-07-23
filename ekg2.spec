@@ -1,21 +1,21 @@
 #
 # Conditional build:
-%bcond_without	aspell			# build without spell-checking support with aspell
-%bcond_without	rss				# don't build rss plugin
-%bcond_without	gadugadu		# don't build gg plugin
-%bcond_without	gpg			# don't build gpg plugin
-%bcond_without	gtk			# don't build gtk plugin
-%bcond_without	jabber			# don't build jabber plugin
-%bcond_without	gnutls			# build jabber plugin without libgnutls
-%bcond_with	libgsm			# don't build libgsm plugin
-%bcond_without	perl			# don't build Perl plugin
-%bcond_without	python			# don't build Python plugin
-%bcond_without	readline		# don't build readline interface
-%bcond_with	sqlite			# build logsqlite plugin based on sqlite (conflicts with sqlite3)
-%bcond_without	sqlite3			# don't build logsqlite plugin based on sqlite3
-%bcond_with	xosd			# don't build xosd plugin
-%bcond_with	git			# checkout git master instead of Source0 - requested by ekg2 developer
-%bcond_with	irckeepalive		# adds patch that check irc connection and disconnect when server dies
+%bcond_without	aspell		# spell-checking support with aspell
+%bcond_without	rss		# rss plugin
+%bcond_without	gadugadu	# gg plugin
+%bcond_without	gpg		# gpg plugin
+%bcond_without	gtk		# gtk plugin
+%bcond_without	jabber		# jabber plugin
+%bcond_without	gnutls		# TLS support in jabber plugin
+%bcond_with	libgsm		# libgsm plugin
+%bcond_without	perl		# Perl plugin
+%bcond_without	python		# Python plugin
+%bcond_without	readline	# readline interface
+%bcond_with	sqlite		# SQLite 2 support in logsqlite plugin (conflicts with sqlite3)
+%bcond_without	sqlite3		# SQLite 3 support in logsqlite plugin
+%bcond_with	xosd		# xosd plugin
+%bcond_with	git		# checkout git master instead of Source0 - requested by ekg2 developer
+%bcond_with	irckeepalive	# patch that check irc connection and disconnect when server dies
 
 %if %{with git}
 %define		subver git.%(date +%Y%m%d)
@@ -38,7 +38,7 @@ Epoch:		2
 License:	GPL v2+
 Group:		Applications/Communications
 %if %{without git}
-Source0:	https://github.com/leafnode/ekg2/tarball/master?/%{name}-%{subver}.tar.gz
+Source0:	https://github.com/ekg2/ekg2/archive/9cd1d7b/%{name}-%{subver}.tar.gz
 # Source0-md5:	2ce452ebcecc03532dee956c5648d890
 %endif
 Patch0:		%{name}-perl-install.patch
@@ -46,7 +46,7 @@ Patch1:		%{name}-gtk.patch
 Patch2:		%{name}-bug-63.patch
 Patch3:		%{name}-keepalive_irc.patch
 Patch4:		openssl.patch
-URL:		http://ekg2.org/
+URL:		https://github.com/ekg2/ekg2
 %{?with_aspell:BuildRequires:	aspell-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -76,8 +76,8 @@ BuildRequires:	sed >= 4.0
 %{?with_sqlite3:BuildRequires:	sqlite3-devel}
 %{?with_xosd:BuildRequires:	xosd-devel}
 BuildRequires:	zlib-devel
-Obsoletes:	ekg2-plugin-ioctld
-Obsoletes:	ekg2-plugin-remote
+Obsoletes:	ekg2-plugin-ioctld < 2:0.4-0.20110305
+Obsoletes:	ekg2-plugin-remote < 2:0.4-0.20110305
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -91,7 +91,7 @@ Summary:	rss plugin for ekg2
 Summary(pl.UTF-8):	Wtyczka rss dla ekg2
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Obsoletes:	ekg2-plugin-feed
+Obsoletes:	ekg2-plugin-feed < 2:0.20110305
 
 %description plugin-rss
 rss plugin for ekg2.
