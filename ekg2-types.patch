@@ -82,3 +82,23 @@
  	}
  
  	for (i = 1, l = final; l; l = l->next, i++) {
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/jabber/misc.c.orig	2025-07-24 07:31:35.923030737 +0200
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/jabber/misc.c	2025-07-24 07:31:43.346408585 +0200
+@@ -96,7 +96,7 @@ char *jabber_openpgp(session_t *s, const
+ 
+ #ifdef HAVE_LIBZ
+ char *jabber_zlib_compress(const char *buf, int *len) {
+-	size_t destlen = (*len) * 1.01 + 12;
++	uLong destlen = (*len) * 1.01 + 12;
+ 	char *compressed = xmalloc(destlen);
+ 
+ 	if (compress((unsigned char *) compressed, &destlen, (unsigned char *) buf, *len) != Z_OK) {
+@@ -104,7 +104,7 @@ char *jabber_zlib_compress(const char *b
+ 		xfree(compressed);
+ 		return NULL;
+ 	} 
+-	debug_function("jabber_handle_write() compress ok, retlen: %d orglen: %d\n", destlen, *len);
++	debug_function("jabber_handle_write() compress ok, retlen: %lu orglen: %d\n", destlen, *len);
+ 	*len = destlen;
+ 	
+ 	return compressed;
