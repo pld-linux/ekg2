@@ -102,3 +102,171 @@
  	*len = destlen;
  	
  	return compressed;
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/ekg/ekg.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/ekg/ekg.c	2026-08-12 19:33:46.576965032 +0200
+@@ -202,21 +202,21 @@
+ 	return;
+ }
+ #ifndef NO_POSIX_SYSTEM
+-static void handle_sigusr1()
++static void handle_sigusr1(int signum)
+ {
+ 	debug("sigusr1 received\n");
+ 	query_emit(NULL, "ekg-sigusr1");
+ 	signal(SIGUSR1, handle_sigusr1);
+ }
+ 
+-static void handle_sigusr2()
++static void handle_sigusr2(int signum)
+ {
+ 	debug("sigusr2 received\n");
+ 	query_emit(NULL, "ekg-sigusr2");
+ 	signal(SIGUSR2, handle_sigusr2);
+ }
+ 
+-static void handle_sighup()
++static void handle_sighup(int signum)
+ {
+ 	ekg_exit();
+ }
+@@ -263,7 +263,7 @@
+ }
+ 
+ /* See handle_fatal_signal comment. */
+-static void handle_sigabrt()
++static void handle_sigabrt(int signum)
+ {
+ 	signal(SIGABRT, SIG_DFL);
+ 	handle_fatal_signal("Abnormal program termination");
+@@ -271,7 +271,7 @@
+ }
+ 
+ /* See handle_fatal_signal comment. */
+-static void handle_sigsegv()
++static void handle_sigsegv(int signum)
+ {
+ 	signal(SIGSEGV, SIG_DFL);
+ 	handle_fatal_signal("Segmentation violation detected");
+@@ -946,7 +946,7 @@
+ 	aliases_destroy();
+ 	theme_free();
+ 	variables_destroy();
+-	script_variables_free(1);
++	script_variables_free();
+ 	emoticons_destroy();
+ 	commands_destroy();
+ 	binding_free();
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/ekg/plugins.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/ekg/plugins.c	2026-08-12 19:38:48.898556435 +0200
+@@ -179,7 +179,7 @@
+ #endif
+ 
+ 	plugin_t *pl;
+-	int (*plugin_init)() = NULL;
++	int (*plugin_init)(int) = NULL;
+ 
+ 	g_assert(name);
+ 	if (plugin_find(name)) {
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/logsqlite/logsqlite.h.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/logsqlite/logsqlite.h	2026-08-12 19:43:19.174280638 +0200
+@@ -31,7 +31,7 @@
+ # define sqlite_t sqlite
+ #endif
+ 
+-extern char *logsqlite_prepare_path();
++extern char *logsqlite_prepare_path(session_t *session, time_t sent);
+ extern QUERY(logsqlite_msg_handler);
+ extern QUERY(logsqlite_status_handler);
+ extern int logsqlite_theme_init();
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/ncurses/nc-stuff.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/ncurses/nc-stuff.c	2026-08-12 19:45:09.161771678 +0200
+@@ -792,7 +792,7 @@
+ }
+ 
+ #ifdef SIGWINCH
+-static void sigwinch_handler()
++static void sigwinch_handler(int signum)
+ {
+ 	signal(SIGWINCH, sigwinch_handler);
+ 	if (have_winch_pipe) {
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python.h.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/python/python.h	2026-08-12 19:48:54.473267629 +0200
+@@ -75,7 +75,7 @@
+ int python_autorun();
+ int python_initialize();
+ int python_finalize();
+-int python_plugin_init();
++int python_plugin_init(int);
+ script_t *python_find_script(PyObject *module);
+ int python_load(script_t *s);
+ int python_unload(script_t *s);
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/readline/main.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/readline/main.c	2026-08-12 19:58:09.612567733 +0200
+@@ -23,7 +23,7 @@
+  *
+  * obsługuje wciśnięcie Ctrl-C.
+  */
+-static void sigint_handler()
++static void sigint_handler(int signum)
+ {
+ 	rl_delete_text(0, rl_end);
+ 	rl_point = rl_end = 0;
+@@ -36,7 +36,7 @@
+  *
+  * osługuje powrót z tła poleceniem ,,fg'', żeby odświeżyć ekran.
+  */
+-static void sigcont_handler()
++static void sigcont_handler(int signum)
+ {
+ 	rl_forced_update_display();
+ }
+@@ -47,7 +47,7 @@
+  * obsługuje zmianę rozmiaru okna.
+  */
+ #ifdef SIGWINCH
+-static void sigwinch_handler()
++static void sigwinch_handler(int signum)
+ {
+ 	ui_need_refresh = 1;
+ }
+--- ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/readline/completion.c.orig	2019-03-15 09:08:44.000000000 +0100
++++ ekg2-f427d083ee899d42532c046100490a915b0e8a82/plugins/readline/completion.c	2026-08-12 20:09:23.341398076 +0200
+@@ -9,8 +9,6 @@
+ 
+ #include <ekg/completion.h>
+ 
+-extern char **completion_matches();
+-
+ static char *rl_strndup(gchar *s, gssize n) {
+ 	static GString *buf = NULL;
+ 	gchar *rec;
+@@ -44,11 +42,11 @@
+ 
+ char *one_and_only = NULL;
+ 
+-char *one_generator(char *text, int state) {
++char *one_generator(const char *text, int state) {
+ 	return state ? NULL : one_and_only;
+ }
+ 
+-char *multi_generator(char *text, int state) {
++char *multi_generator(const char *text, int state) {
+ 	char *ret;
+ 
+ 	if (!ekg2_completions)
+@@ -110,7 +108,7 @@
+ 			one_and_only = rl_strndup(buffer+start, n);
+ 
+ 			g_string_free(buf, TRUE);
+-			return completion_matches(text, one_generator);
++			return rl_completion_matches(text, one_generator);
+ 		}
+ 
+ 		for(i=0;i<n;i++) {
+@@ -124,5 +122,5 @@
+ 	}
+ 
+ 	g_string_free(buf, TRUE);
+-	return completion_matches(text, multi_generator);
++	return rl_completion_matches(text, multi_generator);
+ }
